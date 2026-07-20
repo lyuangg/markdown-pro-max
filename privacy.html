@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>隐私政策 - Markdown Pro Max</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #24292e;
+            --muted: #6a737d;
+            --border: #e1e4e8;
+            --link: #0366d6;
+            --heading: #1b1f23;
+            --code-bg: #f6f8fa;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0d1117;
+                --text: #c9d1d9;
+                --muted: #8b949e;
+                --border: #30363d;
+                --link: #58a6ff;
+                --heading: #f0f6fc;
+                --code-bg: #161b22;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 40px 24px 80px;
+        }
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 28px;
+            color: var(--heading);
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+        }
+        h2 {
+            font-size: 20px;
+            color: var(--heading);
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+        h3 {
+            font-size: 16px;
+            color: var(--heading);
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        p, li { font-size: 15px; margin-bottom: 10px; }
+        ul { padding-left: 24px; margin-bottom: 12px; }
+        a { color: var(--link); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .muted { color: var(--muted); font-size: 14px; }
+        .update-date { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 40px 0;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+        .lang-label {
+            display: inline-block;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 10px;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>隐私政策</h1>
+    <p class="lang-label">Privacy Policy</p>
+    <p class="update-date">最后更新日期：2026-07-20</p>
+
+    <p>
+        <strong>Markdown Pro Max</strong>（以下简称"本扩展"）尊重并保护您的隐私。
+        本隐私政策说明了本扩展如何收集、使用和存储您的数据。
+    </p>
+
+    <!-- ==================== 英文 ==================== -->
+    <p class="muted">
+        Markdown Pro Max ("the Extension") respects and protects your privacy.
+        This Privacy Policy explains how the Extension collects, uses, and stores your data.
+    </p>
+
+    <h2>1. 数据收集范围 / Data Collection</h2>
+
+    <p>本扩展<strong>不会</strong>将您的任何数据上传到外部服务器。所有数据仅存储在您的浏览器本地。</p>
+    <p class="muted">The Extension <strong>does not</strong> upload any of your data to external servers. All data is stored locally in your browser only.</p>
+
+    <h3>1.1 我们存储的数据 / Data We Store</h3>
+
+    <ul>
+        <li>
+            <strong>用户偏好设置</strong>（通过 <code>chrome.storage.sync</code>）：
+            主题模式、代码高亮配色、Mermaid 图表主题、语言偏好、侧边栏折叠状态、
+            阅读进度条开关、撒花动画开关、字数统计开关、页面宽度、表格样式等设置。
+            <br>
+            <span class="muted">User preferences (via <code>chrome.storage.sync</code>):
+            theme, code highlight scheme, Mermaid theme, language, sidebar state,
+            progress bar toggle, confetti toggle, word count, page width, table style, etc.</span>
+        </li>
+        <li>
+            <strong>浏览历史</strong>（通过 <code>chrome.storage.local</code>）：
+            最近打开的 Markdown 文件的 URL 和标题，仅用于在扩展弹窗中展示"最近打开"列表。
+            此功能可在设置中关闭或清空。
+            <br>
+            <span class="muted">Browsing history (via <code>chrome.storage.local</code>):
+            URLs and titles of recently opened Markdown files, used only to show a "Recent" list in the popup.
+            This feature can be disabled or cleared in Settings.</span>
+        </li>
+        <li>
+            <strong>使用次数统计</strong>（通过 <code>chrome.storage.sync</code>）：
+            记录部分功能（如表格复制、图片查看、图表复制、文档导出等）的使用次数，
+            仅用于判断是否达到免费试用上限，不会包含您浏览的具体文件内容。
+            <br>
+            <span class="muted">Usage counters (via <code>chrome.storage.sync</code>):
+            counts of feature usage (table copy, image view, chart copy, export, etc.),
+            used only to track free trial limits. Does not include file contents you browse.</span>
+        </li>
+        <li>
+            <strong>支付状态</strong>（通过 <code>chrome.storage.sync</code>）：
+            存储付费标识，用于判断是否解锁专业版功能。不存储任何支付信息（如银行卡号、微信账号等）。
+            <br>
+            <span class="muted">Payment status (via <code>chrome.storage.sync</code>):
+            stores a paid/unpaid flag to determine feature access. No payment details
+            (bank cards, WeChat accounts, etc.) are stored.</span>
+        </li>
+        <li>
+            <strong>排除站点列表</strong>（通过 <code>chrome.storage.sync</code>）：
+            您选择不自动渲染 Markdown 的网站域名列表。
+            <br>
+            <span class="muted">Excluded sites (via <code>chrome.storage.sync</code>):
+            list of website domains you choose to exclude from automatic Markdown rendering.</span>
+        </li>
+    </ul>
+
+    <h3>1.2 我们不收集的数据 / Data We DO NOT Collect</h3>
+    <ul>
+        <li>您浏览的 Markdown 文件的内容</li>
+        <li>个人信息（姓名、邮箱、地址等）</li>
+        <li>浏览历史（除扩展弹窗中显示的 Markdown 文件列表外）</li>
+        <li>任何可用于识别您个人身份的信息</li>
+    </ul>
+    <div class="muted">
+        <ul>
+            <li>The content of Markdown files you view</li>
+            <li>Personal information (name, email, address, etc.)</li>
+            <li>Browsing history (except the Markdown file list shown in the popup)</li>
+            <li>Any information that can personally identify you</li>
+        </ul>
+    </div>
+
+    <h2>2. 数据使用目的 / How We Use Data</h2>
+    <p>所有存储的数据仅用于以下目的：</p>
+    <ul>
+        <li>在您下次打开扩展时记住您的主题、语言等偏好设置</li>
+        <li>在弹窗中显示最近打开的文件，方便快速访问</li>
+        <li>区分免费版与专业版的功能权限</li>
+        <li>按您的设置排除特定网站不自动渲染</li>
+    </ul>
+    <div class="muted">
+        <p>All stored data is used solely for:</p>
+        <ul>
+            <li>Remembering your preferences (theme, language, etc.) across sessions</li>
+            <li>Showing recently opened files in the popup for quick access</li>
+            <li>Differentiating free vs. pro feature access</li>
+            <li>Excluding specific websites from auto-rendering per your settings</li>
+        </ul>
+    </div>
+
+    <h2>3. 数据共享与传输 / Data Sharing &amp; Transfer</h2>
+    <p>
+        本扩展<strong>不会</strong>将您的数据出售、分享或传输给任何第三方。
+        由于所有数据均存储在本地浏览器中，开发者也<strong>无法访问</strong>您的数据。
+    </p>
+    <p class="muted">
+        The Extension <strong>does not</strong> sell, share, or transfer your data to any third party.
+        Since all data is stored locally in your browser, the developer <strong>cannot access</strong> your data.
+    </p>
+
+    <h2>4. 数据安全 / Data Security</h2>
+    <p>
+        您的数据存储在浏览器的 Chrome Storage API 中，由 Chrome 浏览器本身提供安全保护。
+        本扩展不搭建服务器，不接收网络请求，不存在数据泄露到服务器的风险。
+    </p>
+    <p class="muted">
+        Your data is stored via Chrome's Storage API and protected by the Chrome browser itself.
+        The Extension does not operate servers, does not make network requests for user data,
+        and there is no risk of data leaking to external servers.
+    </p>
+
+    <h2>5. 您的控制权 / Your Control</h2>
+    <p>您可以随时：</p>
+    <ul>
+        <li>在扩展设置页面关闭历史记录功能、清空所有历史记录</li>
+        <li>在扩展设置页面关闭/开启各项功能</li>
+        <li>通过 Chrome 的"扩展程序"页面清除扩展的存储数据</li>
+        <li>卸载扩展，所有本地数据将被自动清除</li>
+    </ul>
+    <div class="muted">
+        <p>You can at any time:</p>
+        <ul>
+            <li>Disable history recording or clear all history in Settings</li>
+            <li>Toggle individual features on/off in Settings</li>
+            <li>Clear the Extension's storage via Chrome's Extensions page</li>
+            <li>Uninstall the Extension — all local data will be automatically removed</li>
+        </ul>
+    </div>
+
+    <h2>6. 支付相关 / Payment</h2>
+    <p>
+        本扩展的专业版升级通过扫码支付完成，支付过程由您自行操作，
+        本扩展不获取、不存储您的任何支付账户信息。
+        支付成功标识仅存储在您的浏览器本地。
+    </p>
+    <p>
+        支付完成后会打开一个外部网页（<code>yuancoder.com</code>）展示支付成功结果。
+        该网页使用了百度统计（Baidu Analytics）记录页面访问数据，与扩展本身独立。
+    </p>
+    <p class="muted">
+        The pro upgrade is completed via QR code payment operated by you.
+        The Extension does not collect or store any payment account information.
+        The payment status flag is stored only locally in your browser.
+    </p>
+    <p class="muted">
+        After payment, an external page (<code>yuancoder.com</code>) will open to confirm success.
+        That page uses Baidu Analytics to track page visits, which is independent of the Extension.
+    </p>
+
+    <h2>7. 隐私政策更新 / Policy Updates</h2>
+    <p>
+        如果本隐私政策发生变更，更新后的版本将在本页面发布。
+        建议您定期查看本页面以了解最新信息。
+    </p>
+    <p class="muted">
+        If this Privacy Policy changes, the updated version will be posted on this page.
+        You are advised to review this page periodically for any changes.
+    </p>
+
+
+</div>
+</body>
+</html>
