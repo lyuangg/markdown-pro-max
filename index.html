@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Markdown Pro Max — 让 Markdown 阅读赏心悦目</title>
+<meta name="description" content="Markdown Pro Max 是一款功能强大的 Chrome Markdown 查看器:Mermaid 图表、数学公式、代码高亮、智能表格、文件批注与多种格式导出,打开即用。">
+<meta property="og:title" content="Markdown Pro Max — 让 Markdown 阅读赏心悦目">
+<meta property="og:description" content="功能强大的 Chrome Markdown 查看器:Mermaid 图表、公式、高亮、表格、批注与多格式导出。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/preview/p1.png">
+<link rel="icon" href="assets/logo.png">
+<script>
+/* 提前应用主题,避免首屏闪烁 */
+(function () {
+    try {
+        if (localStorage.getItem('mdpm-theme') === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    } catch (e) {}
+})();
+</script>
+<style>
+/* ============================================================
+   Design tokens
+   ============================================================ */
+:root {
+    --bg: #07070f;
+    --bg-2: #0b0b17;
+    --text: #f4f4fa;
+    --muted: #9aa0b4;
+    --muted-2: #6b7280;
+    --indigo: #818cf8;
+    --violet: #c084fc;
+    --cyan: #22d3ee;
+    --accent: linear-gradient(120deg, #818cf8 0%, #c084fc 45%, #22d3ee 100%);
+    --btn-primary-color: #0a0a14;
+    --card: rgba(255, 255, 255, 0.04);
+    --card-hover: rgba(255, 255, 255, 0.07);
+    --border: rgba(255, 255, 255, 0.09);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --glass: rgba(255, 255, 255, 0.04);
+    --hover-bg: rgba(255, 255, 255, 0.05);
+    --btn-ghost-bg: rgba(255, 255, 255, 0.04);
+    --btn-ghost-hover: rgba(255, 255, 255, 0.09);
+    --chip-bg: rgba(18, 18, 34, 0.78);
+    --nav-bg: rgba(7, 7, 15, 0.72);
+    --menu-bg: rgba(7, 7, 15, 0.96);
+    --shot-border: rgba(255, 255, 255, 0.14);
+    --grid-line: rgba(255, 255, 255, 0.025);
+    --glow-i: rgba(99, 102, 241, 0.20);
+    --glow-v: rgba(168, 85, 247, 0.16);
+    --glow-c: rgba(34, 211, 238, 0.12);
+    --blob-1: #4f46e5;
+    --blob-2: #7c3aed;
+    --blob-opacity: 0.5;
+    --eyebrow-bg: rgba(129, 140, 248, 0.08);
+    --eyebrow-border: rgba(129, 140, 248, 0.35);
+    --icon-bg: linear-gradient(135deg, rgba(129, 140, 248, 0.16), rgba(34, 211, 238, 0.10));
+    --icon-border: rgba(129, 140, 248, 0.25);
+    --tag-bg: rgba(129, 140, 248, 0.10);
+    --tag-border: rgba(129, 140, 248, 0.28);
+    --card-border-hover: rgba(129, 140, 248, 0.4);
+    --step-stroke: rgba(255, 255, 255, 0.22);
+    --pro-bg: linear-gradient(160deg, rgba(129, 140, 248, 0.10), rgba(7, 7, 15, 0.4) 45%), rgba(255, 255, 255, 0.04);
+    --pro-glow: radial-gradient(500px 300px at 85% -10%, rgba(192, 132, 252, 0.25), transparent 60%), radial-gradient(500px 300px at 10% 110%, rgba(34, 211, 238, 0.18), transparent 60%);
+    --cta-bg: radial-gradient(600px 340px at 50% -10%, rgba(129, 140, 248, 0.28), transparent 65%), linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+    --feature-glow: radial-gradient(circle at 50% 50%, rgba(129, 140, 248, 0.22), transparent 65%);
+    --hero-shot-after: linear-gradient(180deg, transparent 55%, rgba(7, 7, 15, 0.25));
+    --hero-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03), 0 40px 90px -24px rgba(0, 0, 0, 0.8), 0 0 80px -10px rgba(129, 140, 248, 0.35);
+    --shadow-lg: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
+    --shadow-shot-hover: 0 40px 90px -20px rgba(0, 0, 0, 0.85);
+    --shadow-card: 0 30px 60px -24px rgba(0, 0, 0, 0.7);
+    --shadow-card-hover: 0 30px 60px -24px rgba(0, 0, 0, 0.7), 0 0 40px -18px rgba(129, 140, 248, 0.4);
+    --radius: 18px;
+    --radius-lg: 26px;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', ui-monospace, Menlo, monospace;
+}
+
+/* ============================================================
+   Light theme
+   ============================================================ */
+html[data-theme="light"] {
+    --bg: #f6f7fc;
+    --bg-2: #edeff6;
+    --text: #141a2e;
+    --muted: #5b6478;
+    --muted-2: #8a93a8;
+    --indigo: #4f46e5;
+    --violet: #9333ea;
+    --cyan: #0891b2;
+    --accent: linear-gradient(120deg, #4f46e5 0%, #9333ea 45%, #0891b2 100%);
+    --btn-primary-color: #ffffff;
+    --card: rgba(255, 255, 255, 0.78);
+    --card-hover: #ffffff;
+    --border: rgba(15, 23, 42, 0.08);
+    --border-strong: rgba(15, 23, 42, 0.14);
+    --glass: rgba(255, 255, 255, 0.72);
+    --hover-bg: rgba(15, 23, 42, 0.05);
+    --btn-ghost-bg: rgba(255, 255, 255, 0.72);
+    --btn-ghost-hover: #ffffff;
+    --chip-bg: rgba(255, 255, 255, 0.88);
+    --nav-bg: rgba(246, 247, 252, 0.82);
+    --menu-bg: rgba(246, 247, 252, 0.97);
+    --shot-border: rgba(15, 23, 42, 0.10);
+    --grid-line: rgba(15, 23, 42, 0.03);
+    --glow-i: rgba(79, 70, 229, 0.10);
+    --glow-v: rgba(147, 51, 234, 0.08);
+    --glow-c: rgba(8, 145, 178, 0.07);
+    --blob-1: #a5b4fc;
+    --blob-2: #c4b5fd;
+    --blob-opacity: 0.42;
+    --eyebrow-bg: rgba(79, 70, 229, 0.08);
+    --eyebrow-border: rgba(79, 70, 229, 0.30);
+    --icon-bg: linear-gradient(135deg, rgba(79, 70, 229, 0.10), rgba(8, 145, 178, 0.08));
+    --icon-border: rgba(79, 70, 229, 0.22);
+    --tag-bg: rgba(79, 70, 229, 0.08);
+    --tag-border: rgba(79, 70, 229, 0.24);
+    --card-border-hover: rgba(79, 70, 229, 0.35);
+    --step-stroke: rgba(15, 23, 42, 0.14);
+    --pro-bg: linear-gradient(160deg, rgba(79, 70, 229, 0.07), rgba(246, 247, 252, 0.4) 45%), rgba(255, 255, 255, 0.78);
+    --pro-glow: radial-gradient(500px 300px at 85% -10%, rgba(147, 51, 234, 0.14), transparent 60%), radial-gradient(500px 300px at 10% 110%, rgba(8, 145, 178, 0.10), transparent 60%);
+    --cta-bg: radial-gradient(600px 340px at 50% -10%, rgba(79, 70, 229, 0.14), transparent 65%), linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.55));
+    --feature-glow: radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.12), transparent 65%);
+    --hero-shot-after: linear-gradient(180deg, transparent 55%, rgba(246, 247, 252, 0.30));
+    --hero-shadow: 0 0 0 1px rgba(15, 23, 42, 0.05), 0 30px 70px -24px rgba(15, 23, 42, 0.35), 0 0 70px -10px rgba(79, 70, 229, 0.28);
+    --shadow-lg: 0 24px 60px -24px rgba(15, 23, 42, 0.28);
+    --shadow-shot-hover: 0 30px 70px -20px rgba(15, 23, 42, 0.32);
+    --shadow-card: 0 18px 40px -18px rgba(15, 23, 42, 0.16);
+    --shadow-card-hover: 0 22px 50px -18px rgba(15, 23, 42, 0.20), 0 0 36px -18px rgba(79, 70, 229, 0.30);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+html, body { overflow-x: hidden; }
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+::selection { background: rgba(129, 140, 248, 0.35); color: #fff; }
+
+/* ============================================================
+   Ambient background: gradient glows + grid + noise
+   ============================================================ */
+.bg-scene {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+        radial-gradient(1100px 700px at 12% -8%, var(--glow-i), transparent 60%),
+        radial-gradient(900px 650px at 88% 6%, var(--glow-v), transparent 60%),
+        radial-gradient(1100px 750px at 50% 112%, var(--glow-c), transparent 60%),
+        var(--bg);
+}
+.bg-grid {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 30%, transparent 80%);
+            mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 30%, transparent 80%);
+}
+@keyframes blob-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, -30px) scale(1.08); }
+}
+.blob {
+    position: fixed;
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: var(--blob-opacity);
+    pointer-events: none;
+    animation: blob-drift 14s ease-in-out infinite;
+}
+.blob-1 { width: 420px; height: 420px; left: -120px; top: 20%; background: var(--blob-1); }
+.blob-2 { width: 380px; height: 380px; right: -140px; top: 40%; background: var(--blob-2); animation-delay: -5s; }
+
+/* ============================================================
+   Layout helpers
+   ============================================================ */
+.container { max-width: 1140px; margin: 0 auto; padding: 0 28px; }
+section { position: relative; padding: 104px 0; scroll-margin-top: 84px; }
+.section-head { text-align: center; max-width: 720px; margin: 0 auto 64px; }
+.section-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    padding: 6px 16px; border-radius: 999px;
+    border: 1px solid var(--eyebrow-border);
+    background: var(--eyebrow-bg);
+    margin-bottom: 20px;
+}
+.section-title {
+    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    line-height: 1.25; font-weight: 800; letter-spacing: -0.02em;
+}
+.section-sub { color: var(--muted); font-size: 1.08rem; margin-top: 16px; }
+.gradient-text {
+    background: var(--accent);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+}
+
+/* Reveal-on-scroll */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.in { opacity: 1; transform: none; }
+.reveal[data-delay="1"] { transition-delay: 0.08s; }
+.reveal[data-delay="2"] { transition-delay: 0.16s; }
+.reveal[data-delay="3"] { transition-delay: 0.24s; }
+
+/* ============================================================
+   Nav
+   ============================================================ */
+.nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    transition: background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
+    border-bottom: 1px solid transparent;
+}
+.nav.scrolled {
+    background: var(--nav-bg);
+    -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(18px);
+    border-bottom-color: var(--border);
+}
+.nav-inner {
+    max-width: 1140px; margin: 0 auto; padding: 0 28px;
+    height: 68px; display: flex; align-items: center; justify-content: space-between;
+}
+.brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--text); }
+.brand-logo {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.brand-logo img {
+    width: 100%; height: 100%; object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.55);
+}
+.brand-name { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+.nav-links { display: flex; align-items: center; gap: 6px; }
+.nav-links a:not(.btn-primary) {
+    color: var(--muted); text-decoration: none; font-size: 14.5px; font-weight: 500;
+    padding: 8px 14px; border-radius: 10px; transition: color 0.2s, background 0.2s;
+}
+.nav-links a:not(.btn-primary):hover { color: var(--text); background: var(--hover-bg); }
+.nav-links a:not(.btn-primary).active { color: var(--text); }
+.lang-toggle {
+    font: inherit; font-size: 13.5px; font-weight: 600;
+    color: var(--muted); background: transparent;
+    border: 1px solid var(--border-strong); border-radius: 999px;
+    padding: 6px 14px; margin: 0 6px; cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.lang-toggle:hover { color: var(--text); border-color: var(--indigo); background: rgba(129, 140, 248, 0.12); }
+.theme-toggle {
+    font: inherit; display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 999px;
+    color: var(--muted); background: transparent;
+    border: 1px solid var(--border-strong); cursor: pointer; margin: 0 4px;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.theme-toggle:hover { color: var(--text); border-color: var(--indigo); background: rgba(129, 140, 248, 0.12); }
+.theme-toggle svg { width: 16px; height: 16px; }
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+/* 主题切换时的平滑过渡 */
+html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
+    transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease,
+                box-shadow 0.45s ease, background-image 0.45s ease, opacity 0.45s ease !important;
+}
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    font: inherit; font-weight: 600; font-size: 15px;
+    padding: 12px 26px; border-radius: 13px; cursor: pointer;
+    text-decoration: none; border: 1px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.25s, border-color 0.25s, color 0.25s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary {
+    background: var(--accent); color: var(--btn-primary-color);
+    box-shadow: 0 8px 30px -8px rgba(129, 140, 248, 0.6);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 40px -8px rgba(129, 140, 248, 0.75); }
+.btn-ghost {
+    background: var(--btn-ghost-bg); color: var(--text);
+    border-color: var(--border-strong);
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+}
+.btn-ghost:hover { background: var(--btn-ghost-hover); transform: translateY(-2px); }
+.btn-sm { padding: 9px 20px; font-size: 14px; border-radius: 11px; }
+.menu-btn {
+    display: none; background: none; border: none; color: var(--text);
+    font-size: 26px; cursor: pointer; padding: 4px 8px; line-height: 1;
+}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero { padding: 168px 0 90px; text-align: center; }
+.hero-badge {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-size: 13.5px; font-weight: 600; color: var(--text);
+    padding: 8px 18px; border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+    margin-bottom: 30px;
+}
+.hero-badge .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #34d399; box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6);
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+.hero-title {
+    font-size: clamp(2.7rem, 6.5vw, 4.6rem);
+    font-weight: 800; line-height: 1.12; letter-spacing: -0.03em;
+}
+.hero-title .line { display: block; }
+.hero-sub {
+    max-width: 640px; margin: 26px auto 0; color: var(--muted);
+    font-size: 1.13rem;
+}
+.hero-cta { display: flex; gap: 16px; justify-content: center; margin-top: 38px; flex-wrap: wrap; }
+.hero-stats {
+    display: flex; justify-content: center; gap: clamp(24px, 6vw, 72px);
+    margin-top: 64px; flex-wrap: wrap;
+}
+.stat { text-align: center; }
+.stat .num {
+    font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 800;
+    background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.stat .label { font-size: 13.5px; color: var(--muted-2); margin-top: 4px; }
+
+/* Hero visual: floating screenshot + chips */
+.hero-visual { position: relative; margin: 78px auto 0; max-width: 1000px; }
+.hero-shot {
+    position: relative; border-radius: var(--radius-lg); overflow: hidden;
+    border: 1px solid var(--shot-border);
+    box-shadow: var(--hero-shadow);
+    transform: perspective(1200px) rotateX(4deg);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero-shot img { display: block; width: 100%; height: auto; }
+.hero-shot::after {
+    content: ''; position: absolute; inset: 0;
+    background: var(--hero-shot-after);
+    pointer-events: none;
+}
+.chip {
+    position: absolute; display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13.5px; font-weight: 600; color: var(--text);
+    padding: 9px 16px; border-radius: 14px;
+    background: var(--chip-bg);
+    border: 1px solid var(--border-strong);
+    -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+    box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.7);
+    white-space: nowrap;
+    z-index: 2;
+}
+.chip-1 { top: 7%; left: -3%; animation: float-y 5.5s ease-in-out infinite; }
+.chip-2 { top: 30%; right: -3%; animation: float-y 6.5s ease-in-out 0.8s infinite; }
+.chip-3 { bottom: 24%; left: -4%; animation: float-y 6s ease-in-out 0.4s infinite; }
+.chip-4 { bottom: 4%; right: 5%; animation: float-y 5.8s ease-in-out 1.2s infinite; }
+@keyframes float-y {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+/* ============================================================
+   Feature showcase (alternating)
+   ============================================================ */
+.feature {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: center; margin-bottom: 96px;
+}
+.feature:last-child { margin-bottom: 0; }
+.feature-media { position: relative; }
+.feature-media .shot {
+    position: relative; border-radius: var(--radius); overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-lg);
+    background: #f2f2f2;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s;
+}
+.feature-media .shot:hover { transform: translateY(-6px) scale(1.01); box-shadow: var(--shadow-shot-hover); }
+.feature-media .shot img { display: block; width: 100%; height: auto; }
+.feature-index {
+    position: absolute; top: -22px; left: -22px; z-index: 2;
+    width: 64px; height: 64px; border-radius: 18px;
+    display: grid; place-items: center;
+    font-size: 26px; font-weight: 800; color: #fff;
+    background: var(--accent);
+    box-shadow: 0 12px 32px -8px rgba(129, 140, 248, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.feature-glow {
+    position: absolute; inset: -14%; z-index: -1;
+    background: var(--feature-glow);
+    filter: blur(20px);
+}
+.feature-body .feature-title {
+    font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 800; letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 12px;
+}
+.feature-body .feature-desc { color: var(--muted); margin-top: 16px; font-size: 1.05rem; }
+.feature-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.tag {
+    font-size: 13px; font-weight: 600; color: var(--text);
+    padding: 6px 14px; border-radius: 999px;
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+}
+.feature:nth-child(even) .feature-media { order: 2; }
+
+/* ============================================================
+   Feature grid
+   ============================================================ */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.card {
+    position: relative; padding: 30px 28px; border-radius: var(--radius);
+    background: var(--card);
+    border: 1px solid var(--border);
+    -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+    transition: transform 0.35s ease, background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    overflow: hidden;
+}
+.card:hover {
+    transform: translateY(-6px);
+    background: var(--card-hover);
+    border-color: var(--card-border-hover);
+    box-shadow: var(--shadow-card-hover);
+}
+.card .icon {
+    width: 46px; height: 46px; border-radius: 13px;
+    display: grid; place-items: center; margin-bottom: 18px;
+    background: var(--icon-bg);
+    border: 1px solid var(--icon-border);
+    color: var(--indigo);
+}
+.card .icon svg { width: 23px; height: 23px; }
+.card h4 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.card p { font-size: 14px; color: var(--muted); }
+
+/* ============================================================
+   Steps
+   ============================================================ */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; counter-reset: step; }
+.step {
+    position: relative; padding: 34px 30px; border-radius: var(--radius);
+    background: var(--card); border: 1px solid var(--border);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+.step::before {
+    counter-increment: step; content: counter(step, decimal-leading-zero);
+    position: absolute; top: 24px; right: 26px;
+    font-size: 30px; font-weight: 800; color: transparent;
+    -webkit-text-stroke: 1px var(--step-stroke);
+}
+.step .step-icon {
+    width: 48px; height: 48px; border-radius: 14px; margin-bottom: 20px;
+    display: grid; place-items: center; font-size: 22px;
+    background: var(--icon-bg);
+    border: 1px solid var(--icon-border);
+}
+.step h4 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.step p { font-size: 14.5px; color: var(--muted); }
+
+/* ============================================================
+   Pro
+   ============================================================ */
+.pro-card {
+    position: relative; max-width: 980px; margin: 0 auto;
+    padding: 64px 56px; border-radius: var(--radius-lg);
+    background: var(--pro-bg);
+    border: 1px solid var(--card-border-hover);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    box-shadow: var(--shadow-lg), 0 0 70px -20px rgba(129, 140, 248, 0.35);
+    overflow: hidden;
+}
+.pro-card::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background: var(--pro-glow);
+}
+.pro-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #fff;
+    padding: 7px 16px; border-radius: 999px;
+    background: linear-gradient(120deg, #a855f7, #6366f1);
+    box-shadow: 0 6px 24px -6px rgba(168, 85, 247, 0.6);
+    margin-bottom: 24px;
+}
+.pro-card h3 {
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem); font-weight: 800; letter-spacing: -0.02em;
+}
+.pro-card .pro-desc { color: var(--muted); margin: 16px 0 32px; font-size: 1.05rem; max-width: 560px; }
+.pro-list {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 28px; margin-bottom: 36px;
+    list-style: none; max-width: 640px;
+}
+.pro-list li { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--text); }
+.pro-list .tick {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: rgba(52, 211, 153, 0.16); color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.35);
+}
+.pro-list .tick svg { width: 12px; height: 12px; }
+
+/* ============================================================
+   Final CTA
+   ============================================================ */
+.cta-band {
+    text-align: center; padding: 96px 0 0;
+}
+.cta-box {
+    position: relative; max-width: 860px; margin: 0 auto;
+    padding: 72px 48px; border-radius: var(--radius-lg);
+    background: var(--cta-bg);
+    border: 1px solid var(--border-strong);
+    overflow: hidden;
+}
+.cta-box h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em; }
+.cta-box p { color: var(--muted); margin: 16px auto 34px; max-width: 520px; font-size: 1.06rem; }
+.cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.cta-note { margin-top: 22px; font-size: 13px; color: var(--muted-2); }
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.footer { border-top: 1px solid var(--border); margin-top: 96px; padding: 56px 0 40px; }
+.footer-inner { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.footer .brand-name { font-size: 17px; }
+.footer .tagline { color: var(--muted-2); font-size: 13.5px; margin-top: 8px; max-width: 300px; }
+.footer-col h5 {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted-2); margin-bottom: 14px;
+}
+.footer-col a { display: block; color: var(--muted); text-decoration: none; font-size: 14.5px; padding: 5px 0; transition: color 0.2s; }
+.footer-col a:hover { color: var(--text); }
+.footer-bottom {
+    margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    color: var(--muted-2); font-size: 13px;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 900px) {
+    .feature { grid-template-columns: 1fr; gap: 44px; }
+    .feature:nth-child(even) .feature-media { order: 0; }
+    .feature-index { left: 0; top: -20px; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: 1fr; }
+    .hero { padding-top: 138px; }
+    .chip { display: none; }
+    .pro-list { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+    .grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; }
+    .pro-card { padding: 44px 28px; }
+    .cta-box { padding: 52px 26px; }
+    .nav-links {
+        position: fixed; top: 68px; right: 0; left: 0;
+        flex-direction: column; align-items: stretch; gap: 4px;
+        background: var(--menu-bg);
+        -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 24px 22px;
+        transform: translateY(-12px); opacity: 0; pointer-events: none;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .nav-links.open { transform: none; opacity: 1; pointer-events: auto; }
+    .nav-links a { padding: 12px 14px; font-size: 16px; }
+    .nav-links .lang-toggle, .nav-links .theme-toggle, .nav-links .nav-cta { align-self: flex-start; margin-top: 8px; }
+    .menu-btn { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="bg-scene"></div>
+<div class="bg-grid"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- ==================== Nav ==================== -->
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <a class="brand" href="#top">
+            <span class="brand-logo"><img src="assets/logo.png" alt="Markdown Pro Max"></span>
+            <span class="brand-name">Markdown Pro Max</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="#features" data-i18n="nav.features">功能</a>
+            <a href="#showcase" data-i18n="nav.showcase">截图</a>
+            <a href="#pro" data-i18n="nav.pro">专业版</a>
+            <button class="lang-toggle" id="langToggle" type="button">EN</button>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换主题">
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="7" y2="7"/><line x1="17" y1="17" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="7" y2="17"/><line x1="17" y1="7" x2="19.1" y2="4.9"/></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <a class="btn btn-primary btn-sm nav-cta" href="#install" data-i18n="nav.cta">安装</a>
+        </div>
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu">☰</button>
+    </div>
+</nav>
+
+<!-- ==================== Hero ==================== -->
+<header class="hero" id="top">
+    <div class="container">
+        <div class="hero-badge reveal">
+            <span class="dot"></span>
+            <span data-i18n="hero.badge">专为 Markdown 阅读打造 · Chrome 扩展</span>
+        </div>
+        <h1 class="hero-title">
+            <span class="line reveal" data-i18n="hero.t1">让 Markdown 阅读</span>
+            <span class="line gradient-text reveal" data-delay="1" data-i18n="hero.t2">赏心悦目</span>
+        </h1>
+        <p class="hero-sub reveal" data-delay="2" data-i18n="hero.sub">
+            Markdown Pro Max 是一款功能强大的 Markdown 查看器——Mermaid 图表、数学公式、代码高亮、智能表格、文件批注与多种格式导出,打开 .md 文件即可享受沉浸式阅读。
+        </p>
+        <div class="hero-cta reveal" data-delay="3">
+            <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/markdown-pro-max/jlflljhflgneefhminfcgplembjcpbie" target="_blank" rel="noopener" data-i18n="hero.cta1">安装到 Chrome</a>
+            <a class="btn btn-ghost" href="privacy.html" data-i18n="hero.cta2">查看隐私政策</a>
+        </div>
+        <div class="hero-stats reveal" data-delay="3">
+            <div class="stat"><div class="num">5</div><div class="label" data-i18n="hero.s1">大核心功能</div></div>
+            <div class="stat"><div class="num">100+</div><div class="label" data-i18n="hero.s2">代码语言高亮</div></div>
+            <div class="stat"><div class="num">6</div><div class="label" data-i18n="hero.s3">种配色主题</div></div>
+            <div class="stat"><div class="num">3</div><div class="label" data-i18n="hero.s4">种导出格式</div></div>
+        </div>
+    </div>
+
+    <div class="hero-visual reveal" data-delay="3">
+        <div class="hero-shot" data-parallax="1">
+            <img src="assets/preview/p4.png" alt="Markdown Pro Max 渲染效果">
+        </div>
+        <span class="chip chip-1">📊 <span data-i18n="chip.mermaid">Mermaid</span></span>
+        <span class="chip chip-2">∑ <span data-i18n="chip.math">KaTeX 公式</span></span>
+        <span class="chip chip-3">⚡ <span data-i18n="chip.code">代码高亮</span></span>
+        <span class="chip chip-4">☑ <span data-i18n="chip.task">任务列表</span></span>
+    </div>
+</header>
+
+<!-- ==================== Core features ==================== -->
+<section id="features">
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="section-eyebrow" data-i18n="features.eyebrow">核心功能</span>
+            <h2 class="section-title">
+                <span data-i18n="features.title1">把每个细节</span> <span class="gradient-text" data-i18n="features.title2">打磨到位</span>
+            </h2>
+            <p class="section-sub" data-i18n="features.sub">从渲染到批注,覆盖 Markdown 阅读的全部需求。</p>
+        </div>
+
+        <div class="feature reveal">
+            <div class="feature-media">
+                <div class="shot" data-parallax="1"><img src="assets/preview/p5.png" alt="智能表格" loading="lazy"></div>
+                <div class="feature-glow"></div>
+                <div class="feature-index">01</div>
+            </div>
+            <div class="feature-body">
+                <h3 class="feature-title"><span class="emoji">📋</span> <span data-i18n="f1.title">智能表格</span></h3>
+                <p class="feature-desc" data-i18n="f1.desc">一键复制为 Markdown、Excel(TSV)或 HTML;支持列排序、斑马纹、边框与宽度模式,处理数据更顺手。</p>
+                <div class="feature-tags">
+                    <span class="tag" data-i18n="f1.t1">列排序</span>
+                    <span class="tag" data-i18n="f1.t2">Markdown · Excel · HTML</span>
+                    <span class="tag" data-i18n="f1.t3">样式定制</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature reveal">
+            <div class="feature-media">
+                <div class="shot" data-parallax="1"><img src="assets/preview/p2.png" alt="一键导出" loading="lazy"></div>
+                <div class="feature-glow"></div>
+                <div class="feature-index">02</div>
+            </div>
+            <div class="feature-body">
+                <h3 class="feature-title"><span class="emoji">📤</span> <span data-i18n="f2.title">一键导出</span></h3>
+                <p class="feature-desc" data-i18n="f2.desc">将文档一键导出为 PDF、PNG 或 HTML,完整保留样式与高亮,分享、归档都从容自如。</p>
+                <div class="feature-tags">
+                    <span class="tag">PDF</span>
+                    <span class="tag">PNG</span>
+                    <span class="tag">HTML</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature reveal">
+            <div class="feature-media">
+                <div class="shot" data-parallax="1"><img src="assets/preview/p3.png" alt="文件批注" loading="lazy"></div>
+                <div class="feature-glow"></div>
+                <div class="feature-index">03</div>
+            </div>
+            <div class="feature-body">
+                <h3 class="feature-title"><span class="emoji">🖊️</span> <span data-i18n="f3.title">文件批注</span></h3>
+                <p class="feature-desc" data-i18n="f3.desc">画笔、直线、矩形、圆形、文字、高亮与橡皮擦,自定义颜色与粗细,支持撤销重做,并可导出带批注的 PDF。</p>
+                <div class="feature-tags">
+                    <span class="tag" data-i18n="f3.t1">画笔</span>
+                    <span class="tag" data-i18n="f3.t2">高亮</span>
+                    <span class="tag" data-i18n="f3.t3">撤销重做</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature reveal">
+            <div class="feature-media">
+                <div class="shot" data-parallax="1"><img src="assets/preview/p1.png" alt="沉浸阅读体验" loading="lazy"></div>
+                <div class="feature-glow"></div>
+                <div class="feature-index">04</div>
+            </div>
+            <div class="feature-body">
+                <h3 class="feature-title"><span class="emoji">🎉</span> <span data-i18n="f4.title">沉浸阅读体验</span></h3>
+                <p class="feature-desc" data-i18n="f4.desc">阅读进度条、字数统计、读完撒花动画,让阅读的每一刻都有回应。</p>
+                <div class="feature-tags">
+                    <span class="tag" data-i18n="f4.t1">进度条</span>
+                    <span class="tag" data-i18n="f4.t2">字数统计</span>
+                    <span class="tag" data-i18n="f4.t3">撒花动画</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== Screenshot gallery ==================== -->
+<section id="showcase">
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="section-eyebrow" data-i18n="showcase.eyebrow">界面预览</span>
+            <h2 class="section-title"><span data-i18n="showcase.title1">不止好看</span><span class="gradient-text" data-i18n="showcase.title2">,更实用</span></h2>
+            <p class="section-sub" data-i18n="showcase.sub">从阅读到批注,完整的工作流一览。</p>
+        </div>
+        <div class="grid" id="shotGrid">
+            <div class="card reveal" style="padding:12px;">
+                <img src="assets/preview/p1.png" alt="阅读完成动画" loading="lazy" style="width:100%;height:auto;border-radius:12px;display:block;">
+                <p style="padding:14px 8px 6px;text-align:center;" data-i18n="g1">阅读完成动画</p>
+            </div>
+            <div class="card reveal" data-delay="1" style="padding:12px;">
+                <img src="assets/preview/p2.png" alt="一键导出菜单" loading="lazy" style="width:100%;height:auto;border-radius:12px;display:block;">
+                <p style="padding:14px 8px 6px;text-align:center;" data-i18n="g2">一键导出</p>
+            </div>
+            <div class="card reveal" data-delay="2" style="padding:12px;">
+                <img src="assets/preview/p3.png" alt="文件批注" loading="lazy" style="width:100%;height:auto;border-radius:12px;display:block;">
+                <p style="padding:14px 8px 6px;text-align:center;" data-i18n="g3">文件批注</p>
+            </div>
+            <div class="card reveal" style="padding:12px;">
+                <img src="assets/preview/p4.png" alt="Mermaid 图表与公式" loading="lazy" style="width:100%;height:auto;border-radius:12px;display:block;">
+                <p style="padding:14px 8px 6px;text-align:center;" data-i18n="g4">Mermaid · 公式 · 主题</p>
+            </div>
+            <div class="card reveal" data-delay="1" style="padding:12px;">
+                <img src="assets/preview/p5.png" alt="智能表格" loading="lazy" style="width:100%;height:auto;border-radius:12px;display:block;">
+                <p style="padding:14px 8px 6px;text-align:center;" data-i18n="g5">智能表格</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== Feature grid ==================== -->
+<section id="features-more">
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="section-eyebrow" data-i18n="more.eyebrow">更多特性</span>
+            <h2 class="section-title"><span data-i18n="more.title1">细节丰富,</span><span class="gradient-text" data-i18n="more.title2">总有一处打动你</span></h2>
+        </div>
+        <div class="grid">
+            <div class="card reveal">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+                <h4 data-i18n="m1.t">大纲导航</h4>
+                <p data-i18n="m1.d">自动提取标题生成目录,滚动联动高亮当前章节,支持搜索过滤与拖拽调宽。</p>
+            </div>
+            <div class="card reveal" data-delay="1">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></div>
+                <h4 data-i18n="m2.t">多主题系统</h4>
+                <p data-i18n="m2.d">明亮、暗黑、护眼三套主题,自动跟随系统切换并记忆你的偏好。</p>
+            </div>
+            <div class="card reveal" data-delay="2">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div>
+                <h4 data-i18n="m3.t">数学公式</h4>
+                <p data-i18n="m3.d">基于 KaTeX 引擎渲染行内与块级公式,学术笔记与公式文档轻松阅读。</p>
+            </div>
+            <div class="card reveal">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+                <h4 data-i18n="m4.t">代码高亮</h4>
+                <p data-i18n="m4.d">100+ 语言语法高亮,6 种配色主题,支持行号与一键复制。</p>
+            </div>
+            <div class="card reveal" data-delay="1">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+                <h4 data-i18n="m5.t">任务列表</h4>
+                <p data-i18n="m5.d">GitHub 风格复选框,支持嵌套任务,勾选状态一目了然。</p>
+            </div>
+            <div class="card reveal" data-delay="2">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/><path d="M4 3v6l-2-2"/></svg></div>
+                <h4 data-i18n="m6.t">[TOC] 内联目录</h4>
+                <p data-i18n="m6.d">在文档任意位置写入 [TOC] 自动生成可折叠目录。</p>
+            </div>
+            <div class="card reveal">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div>
+                <h4 data-i18n="m7.t">自动刷新</h4>
+                <p data-i18n="m7.d">监听文件变化,文档被修改后自动重新渲染。</p>
+            </div>
+            <div class="card reveal" data-delay="1">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <h4 data-i18n="m8.t">历史记录</h4>
+                <p data-i18n="m8.d">记录最近打开的文件,一键快速回访,可随时清空。</p>
+            </div>
+            <div class="card reveal" data-delay="2">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><polyline points="5 9 2 12 5 15"/><polyline points="19 9 22 12 19 15"/></svg></div>
+                <h4 data-i18n="m9.t">Mermaid 图表</h4>
+                <p data-i18n="m9.d">流程图、时序图、甘特图、类图、状态图,点击放大、缩放拖拽,支持 SVG / PNG 导出。</p>
+            </div>
+            <div class="card reveal">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+                <h4 data-i18n="m10.t">多语言</h4>
+                <p data-i18n="m10.d">界面支持简体中文与 English,随时一键切换。</p>
+            </div>
+            <div class="card reveal" data-delay="1">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+                <h4 data-i18n="m11.t">图片增强</h4>
+                <p data-i18n="m11.d">支持 {width=…} 属性控制宽高,点击图片即可放大查看。</p>
+            </div>
+            <div class="card reveal" data-delay="2">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+                <h4 data-i18n="m12.t">新标签页打开链接</h4>
+                <p data-i18n="m12.d">可配置在链接点击时于新标签页打开,保持阅读不中断。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== How to use ==================== -->
+<section>
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="section-eyebrow" data-i18n="how.eyebrow">快速上手</span>
+            <h2 class="section-title"><span data-i18n="how.title1">三步</span><span class="gradient-text" data-i18n="how.title2">,即刻开始</span></h2>
+        </div>
+        <div class="steps">
+            <div class="step reveal">
+                <div class="step-icon">⬇️</div>
+                <h4 data-i18n="how.s1t">安装扩展</h4>
+                <p data-i18n="how.s1d">前往 Chrome 应用商店,一键添加 Markdown Pro Max。</p>
+            </div>
+            <div class="step reveal" data-delay="1">
+                <div class="step-icon">📂</div>
+                <h4 data-i18n="how.s2t">打开 .md 文件</h4>
+                <p data-i18n="how.s2d">在浏览器中打开本地或在线 Markdown 文件。</p>
+            </div>
+            <div class="step reveal" data-delay="2">
+                <div class="step-icon">✨</div>
+                <h4 data-i18n="how.s3t">沉浸阅读</h4>
+                <p data-i18n="how.s3d">渲染自动完成,尽情享受赏心悦目的阅读体验。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== Pro ==================== -->
+<section id="pro">
+    <div class="container">
+        <div class="pro-card reveal">
+            <div class="pro-badge">⚡ PRO</div>
+            <h3 data-i18n="pro.title">一次购买,终身使用</h3>
+            <p class="pro-desc" data-i18n="pro.desc">专业版解锁全部能力,无订阅、无隐藏费用。所有数据依旧只保存在你的浏览器本地。</p>
+            <ul class="pro-list">
+                <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="pro.p1">无限导出,不受试用限制</span></li>
+                <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="pro.p2">全部批注与导出工具</span></li>
+                <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="pro.p3">一次付款,永久有效</span></li>
+                <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="pro.p4">数据永远留在本地</span></li>
+            </ul>
+            <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/markdown-pro-max/jlflljhflgneefhminfcgplembjcpbie" target="_blank" rel="noopener" data-i18n="pro.cta">了解更多</a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== Final CTA ==================== -->
+<section class="cta-band" id="install">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2 data-i18n="cta.title">现在就体验最顺手的 Markdown 阅读器</h2>
+            <p data-i18n="cta.sub">免费安装,打开任意一个 .md 文件,即刻开始。</p>
+            <div class="cta-actions">
+                <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/markdown-pro-max/jlflljhflgneefhminfcgplembjcpbie" target="_blank" rel="noopener" data-i18n="cta.btn">安装到 Chrome 应用商店</a>
+            </div>
+            <p class="cta-note" data-i18n="cta.note">免费使用 · 可选升级专业版 · 无需注册账号</p>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== Footer ==================== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div>
+                <a class="brand" href="#top">
+                    <span class="brand-logo"><img src="assets/logo.png" alt="Markdown Pro Max"></span>
+                    <span class="brand-name">Markdown Pro Max</span>
+                </a>
+                <p class="tagline" data-i18n="footer.tagline">让 Markdown 阅读赏心悦目的 Chrome 扩展。</p>
+            </div>
+            <div class="footer-col">
+                <h5 data-i18n="footer.p1">产品</h5>
+                <a href="#features" data-i18n="footer.l1">核心功能</a>
+                <a href="#showcase" data-i18n="footer.l2">界面预览</a>
+                <a href="#pro" data-i18n="footer.l3">专业版</a>
+            </div>
+            <div class="footer-col">
+                <h5 data-i18n="footer.p2">资源</h5>
+                <a href="privacy.html" data-i18n="footer.l4">隐私政策</a>
+                <a href="https://github.com/lyuangg/markdown-pro-max" target="_blank" rel="noopener" data-i18n="footer.l5">GitHub</a>
+                <a href="https://chromewebstore.google.com/detail/markdown-pro-max/jlflljhflgneefhminfcgplembjcpbie" target="_blank" rel="noopener" data-i18n="footer.l6">Chrome 应用商店</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Markdown Pro Max</span>
+            <span data-i18n="footer.rights">保留所有权利 · All rights reserved.</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+'use strict';
+
+/* ============================================================
+   i18n
+   ============================================================ */
+var I18N = {
+    'zh': {
+        'nav.features': '功能', 'nav.showcase': '截图', 'nav.pro': '专业版', 'nav.cta': '安装',
+        'hero.badge': '专为 Markdown 阅读打造 · Chrome 扩展',
+        'hero.t1': '让 Markdown 阅读', 'hero.t2': '赏心悦目',
+        'hero.sub': 'Markdown Pro Max 是一款功能强大的 Markdown 查看器——Mermaid 图表、数学公式、代码高亮、智能表格、文件批注与多种格式导出,打开 .md 文件即可享受沉浸式阅读。',
+        'hero.cta1': '安装到 Chrome', 'hero.cta2': '查看隐私政策',
+        'hero.s1': '大核心功能', 'hero.s2': '代码语言高亮', 'hero.s3': '种配色主题', 'hero.s4': '种导出格式',
+        'chip.mermaid': 'Mermaid', 'chip.math': 'KaTeX 公式', 'chip.code': '代码高亮', 'chip.task': '任务列表',
+        'features.eyebrow': '核心功能', 'features.title1': '把每个细节', 'features.title2': '打磨到位',
+        'features.sub': '从渲染到批注,覆盖 Markdown 阅读的全部需求。',
+        'f1.title': '智能表格', 'f1.desc': '一键复制为 Markdown、Excel(TSV)或 HTML;支持列排序、斑马纹、边框与宽度模式,处理数据更顺手。', 'f1.t1': '列排序', 'f1.t2': 'Markdown · Excel · HTML', 'f1.t3': '样式定制',
+        'f2.title': '一键导出', 'f2.desc': '将文档一键导出为 PDF、PNG 或 HTML,完整保留样式与高亮,分享、归档都从容自如。',
+        'f3.title': '文件批注', 'f3.desc': '画笔、直线、矩形、圆形、文字、高亮与橡皮擦,自定义颜色与粗细,支持撤销重做,并可导出带批注的 PDF。', 'f3.t1': '画笔', 'f3.t2': '高亮', 'f3.t3': '撤销重做',
+        'f4.title': '沉浸阅读体验', 'f4.desc': '阅读进度条、字数统计、读完撒花动画,让阅读的每一刻都有回应。', 'f4.t1': '进度条', 'f4.t2': '字数统计', 'f4.t3': '撒花动画',
+        'showcase.eyebrow': '界面预览', 'showcase.title1': '不止好看', 'showcase.title2': ',更实用',
+        'showcase.sub': '从阅读到批注,完整的工作流一览。',
+        'g1': '阅读完成动画', 'g2': '一键导出', 'g3': '文件批注', 'g4': 'Mermaid · 公式 · 主题', 'g5': '智能表格',
+        'more.eyebrow': '更多特性', 'more.title1': '细节丰富,', 'more.title2': '总有一处打动你',
+        'm1.t': '大纲导航', 'm1.d': '自动提取标题生成目录,滚动联动高亮当前章节,支持搜索过滤与拖拽调宽。',
+        'm2.t': '多主题系统', 'm2.d': '明亮、暗黑、护眼三套主题,自动跟随系统切换并记忆你的偏好。',
+        'm3.t': '数学公式', 'm3.d': '基于 KaTeX 引擎渲染行内与块级公式,学术笔记与公式文档轻松阅读。',
+        'm4.t': '代码高亮', 'm4.d': '100+ 语言语法高亮,6 种配色主题,支持行号与一键复制。',
+        'm5.t': '任务列表', 'm5.d': 'GitHub 风格复选框,支持嵌套任务,勾选状态一目了然。',
+        'm6.t': '[TOC] 内联目录', 'm6.d': '在文档任意位置写入 [TOC] 自动生成可折叠目录。',
+        'm7.t': '自动刷新', 'm7.d': '监听文件变化,文档被修改后自动重新渲染。',
+        'm8.t': '历史记录', 'm8.d': '记录最近打开的文件,一键快速回访,可随时清空。',
+        'm9.t': 'Mermaid 图表', 'm9.d': '流程图、时序图、甘特图、类图、状态图,点击放大、缩放拖拽,支持 SVG / PNG 导出。',
+        'm10.t': '多语言', 'm10.d': '界面支持简体中文与 English,随时一键切换。',
+        'm11.t': '图片增强', 'm11.d': '支持 {width=…} 属性控制宽高,点击图片即可放大查看。',
+        'm12.t': '新标签页打开链接', 'm12.d': '可配置在链接点击时于新标签页打开,保持阅读不中断。',
+        'how.eyebrow': '快速上手', 'how.title1': '三步', 'how.title2': ',即刻开始',
+        'how.s1t': '安装扩展', 'how.s1d': '前往 Chrome 应用商店,一键添加 Markdown Pro Max。',
+        'how.s2t': '打开 .md 文件', 'how.s2d': '在浏览器中打开本地或在线 Markdown 文件。',
+        'how.s3t': '沉浸阅读', 'how.s3d': '渲染自动完成,尽情享受赏心悦目的阅读体验。',
+        'pro.title': '一次购买,终身使用',
+        'pro.desc': '专业版解锁全部能力,无订阅、无隐藏费用。所有数据依旧只保存在你的浏览器本地。',
+        'pro.p1': '无限导出,不受试用限制', 'pro.p2': '全部批注与导出工具', 'pro.p3': '一次付款,永久有效', 'pro.p4': '数据永远留在本地',
+        'pro.cta': '了解更多',
+        'cta.title': '现在就体验最顺手的 Markdown 阅读器',
+        'cta.sub': '免费安装,打开任意一个 .md 文件,即刻开始。',
+        'cta.btn': '安装到 Chrome 应用商店',
+        'cta.note': '免费使用 · 可选升级专业版 · 无需注册账号',
+        'footer.tagline': '让 Markdown 阅读赏心悦目的 Chrome 扩展。',
+        'footer.p1': '产品', 'footer.l1': '核心功能', 'footer.l2': '界面预览', 'footer.l3': '专业版',
+        'footer.p2': '资源', 'footer.l4': '隐私政策', 'footer.l5': 'GitHub', 'footer.l6': 'Chrome 应用商店',
+        'footer.rights': '保留所有权利 · All rights reserved.'
+    },
+    'en': {
+        'nav.features': 'Features', 'nav.showcase': 'Screenshots', 'nav.pro': 'Pro', 'nav.cta': 'Install',
+        'hero.badge': 'Built for Markdown Reading · Chrome Extension',
+        'hero.t1': 'Make Markdown reading', 'hero.t2': 'truly enjoyable',
+        'hero.sub': 'Markdown Pro Max is a powerful Markdown viewer — Mermaid diagrams, math formulas, code highlighting, smart tables, annotations and multi-format export, ready the moment you open a .md file.',
+        'hero.cta1': 'Install on Chrome', 'hero.cta2': 'Privacy Policy',
+        'hero.s1': 'Core Features', 'hero.s2': 'Languages Highlighted', 'hero.s3': 'Color Themes', 'hero.s4': 'Export Formats',
+        'chip.mermaid': 'Mermaid', 'chip.math': 'KaTeX Math', 'chip.code': 'Code Highlight', 'chip.task': 'Task Lists',
+        'features.eyebrow': 'Core Features', 'features.title1': 'Every detail,', 'features.title2': 'crafted to perfection',
+        'features.sub': 'From rendering to annotation — covering every Markdown reading need.',
+        'f1.title': 'Smart Tables', 'f1.desc': 'Copy GFM tables as Markdown, Excel (TSV) or HTML in one click. Column sorting, zebra stripes, borders and width modes make data a breeze.', 'f1.t1': 'Sorting', 'f1.t2': 'Markdown · Excel · HTML', 'f1.t3': 'Styling',
+        'f2.title': 'One-Click Export', 'f2.desc': 'Export your document to PDF, PNG or HTML in one click — styles and highlighting fully preserved.',
+        'f3.title': 'File Annotation', 'f3.desc': 'Pen, line, rectangle, circle, text, highlighter and eraser with adjustable color and width, undo/redo, and annotated-PDF export.', 'f3.t1': 'Pen', 'f3.t2': 'Highlighter', 'f3.t3': 'Undo / Redo',
+        'f4.title': 'Immersive Reading', 'f4.desc': 'A progress bar, word count and a confetti celebration when you finish reading — every moment feels rewarding.', 'f4.t1': 'Progress bar', 'f4.t2': 'Word count', 'f4.t3': 'Confetti',
+        'showcase.eyebrow': 'Gallery', 'showcase.title1': 'Beautiful', 'showcase.title2': 'and practical',
+        'showcase.sub': 'From reading to annotating — the complete workflow at a glance.',
+        'g1': 'Reading Completion Animation', 'g2': 'One-Click Export', 'g3': 'File Annotation', 'g4': 'Mermaid · Math · Themes', 'g5': 'Smart Tables',
+        'more.eyebrow': 'More Features', 'more.title1': 'Rich in detail,', 'more.title2': 'something for everyone',
+        'm1.t': 'Outline Navigation', 'm1.d': 'Auto-generate a TOC from headings with scroll-sync highlighting, search filter and draggable width.',
+        'm2.t': 'Theme System', 'm2.d': 'Light, dark and eye-comfort themes that follow your system and remember your choice.',
+        'm3.t': 'Math Formulas', 'm3.d': 'KaTeX-powered rendering for inline and block math — perfect for academic notes.',
+        'm4.t': 'Code Highlighting', 'm4.d': 'Syntax highlighting for 100+ languages, 6 themes, line numbers and one-click copy.',
+        'm5.t': 'Task Lists', 'm5.d': 'GitHub-style checkboxes with nested task support.',
+        'm6.t': '[TOC] Inline TOC', 'm6.d': 'Write [TOC] anywhere in your document to auto-generate a collapsible table of contents.',
+        'm7.t': 'Auto Refresh', 'm7.d': 'Watches file changes and re-renders automatically when the document is modified.',
+        'm8.t': 'History', 'm8.d': 'Track recently opened files for quick revisiting, clearable anytime.',
+        'm9.t': 'Mermaid Diagrams', 'm9.d': 'Flowcharts, sequence, Gantt, class and state diagrams — zoom, pan, and export as SVG or PNG.',
+        'm10.t': 'Bilingual UI', 'm10.d': 'Interface available in 简体中文 and English, switchable anytime.',
+        'm11.t': 'Image Enhancement', 'm11.d': 'Control size with {width=…} attributes and click images to zoom in.',
+        'm12.t': 'Open Links in New Tab', 'm12.d': 'Configurable to open links in a new tab so your reading never breaks.',
+        'how.eyebrow': 'Quick Start', 'how.title1': 'Three steps', 'how.title2': 'to get started',
+        'how.s1t': 'Install', 'how.s1d': 'Add Markdown Pro Max from the Chrome Web Store in one click.',
+        'how.s2t': 'Open a .md file', 'how.s2d': 'Open a local or online Markdown file in your browser.',
+        'how.s3t': 'Enjoy reading', 'how.s3d': 'Rendering happens automatically — just sit back and read.',
+        'pro.title': 'One-time purchase, lifetime access',
+        'pro.desc': 'Unlock every capability with no subscriptions and no hidden fees. Your data still stays in your browser.',
+        'pro.p1': 'Unlimited exports, no trial limits', 'pro.p2': 'All annotation & export tools', 'pro.p3': 'One payment, lifetime access', 'pro.p4': 'Data stays local, always',
+        'pro.cta': 'Learn more',
+        'cta.title': 'Start reading Markdown the way it should feel',
+        'cta.sub': 'Free to install — open any .md file and begin instantly.',
+        'cta.btn': 'Install from Chrome Web Store',
+        'cta.note': 'Free to use · Optional Pro upgrade · No account required',
+        'footer.tagline': 'The Chrome extension that makes Markdown reading a joy.',
+        'footer.p1': 'Product', 'footer.l1': 'Features', 'footer.l2': 'Gallery', 'footer.l3': 'Pro',
+        'footer.p2': 'Resources', 'footer.l4': 'Privacy Policy', 'footer.l5': 'GitHub', 'footer.l6': 'Chrome Web Store',
+        'footer.rights': 'All rights reserved.'
+    }
+};
+
+var STORE_URL = 'https://chromewebstore.google.com/detail/markdown-pro-max/jlflljhflgneefhminfcgplembjcpbie';
+
+function currentLang() {
+    var saved = null;
+    try { saved = localStorage.getItem('mdpm-lang'); } catch (e) { /* ignore */ }
+    return saved === 'en' || saved === 'zh' ? saved : 'zh';
+}
+
+function applyLang(lang) {
+    var dict = I18N[lang];
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) {
+            el.textContent = dict[key];
+        }
+    });
+    var toggle = document.getElementById('langToggle');
+    toggle.textContent = lang === 'zh' ? 'EN' : '中文';
+    try { localStorage.setItem('mdpm-lang', lang); } catch (e) { /* ignore */ }
+    document.title = lang === 'zh'
+        ? 'Markdown Pro Max — 让 Markdown 阅读赏心悦目'
+        : 'Markdown Pro Max — Make Markdown Reading Truly Enjoyable';
+}
+
+document.getElementById('langToggle').addEventListener('click', function () {
+    applyLang(currentLang() === 'zh' ? 'en' : 'zh');
+});
+
+/* ============================================================
+   Theme toggle (dark / light)
+   ============================================================ */
+var themeToggle = document.getElementById('themeToggle');
+if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+        var html = document.documentElement;
+        html.classList.add('theme-anim');
+        var isLight = html.getAttribute('data-theme') === 'light';
+        if (isLight) {
+            html.removeAttribute('data-theme');
+        } else {
+            html.setAttribute('data-theme', 'light');
+        }
+        try { localStorage.setItem('mdpm-theme', isLight ? '' : 'light'); } catch (e) { /* ignore */ }
+        setTimeout(function () { html.classList.remove('theme-anim'); }, 500);
+    });
+}
+
+/* ============================================================
+   Nav: scroll state + mobile menu + scrollspy
+   ============================================================ */
+var nav = document.getElementById('nav');
+var menuBtn = document.getElementById('menuBtn');
+var navLinks = document.getElementById('navLinks');
+var sections = ['features', 'showcase', 'pro'];
+
+window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 24);
+
+    var pos = window.scrollY + 120;
+    var current = '';
+    sections.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && el.offsetTop <= pos) { current = id; }
+    });
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+}, { passive: true });
+
+menuBtn.addEventListener('click', function () {
+    navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { navLinks.classList.remove('open'); });
+});
+
+/* ============================================================
+   Custom smooth scroll for anchor links (snappy, predictable)
+   ============================================================ */
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var NAV_OFFSET = 84;
+    function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            var id = link.getAttribute('href').slice(1);
+            var target = document.getElementById(id);
+            if (!target) { return; }
+            e.preventDefault();
+            var html = document.documentElement;
+            var prevBehavior = html.style.scrollBehavior;
+            // 动画期间临时关闭 CSS smooth,避免逐帧 scrollTo 触发各自的平滑动画互相打架
+            html.style.scrollBehavior = 'auto';
+            var start = window.scrollY;
+            var end = target.getBoundingClientRect().top + start - NAV_OFFSET;
+            var duration = Math.max(320, Math.min(850, Math.abs(end - start) * 0.45));
+            var startTime = null;
+            function step(ts) {
+                if (startTime === null) { startTime = ts; }
+                var p = Math.min(1, (ts - startTime) / duration);
+                window.scrollTo(0, start + (end - start) * easeInOutCubic(p));
+                if (p < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    html.style.scrollBehavior = prevBehavior;
+                }
+            }
+            requestAnimationFrame(step);
+            if (history.replaceState) { history.replaceState(null, '', '#' + id); }
+        });
+    });
+}
+
+/* ============================================================
+   Reveal on scroll
+   ============================================================ */
+var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+/* ============================================================
+   Subtle parallax on feature screenshots
+   ============================================================ */
+var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var isMobile = window.innerWidth < 900;
+
+if (!reduceMotion && !isMobile) {
+    var raf = null;
+    window.addEventListener('scroll', function () {
+        if (raf) { return; }
+        raf = requestAnimationFrame(function () {
+            document.querySelectorAll('[data-parallax]').forEach(function (el) {
+                var rect = el.getBoundingClientRect();
+                if (rect.bottom < 0 || rect.top > window.innerHeight) { return; }
+                var offset = (window.innerHeight / 2 - (rect.top + rect.height / 2)) * 0.03;
+                el.style.transform = 'translateY(' + offset.toFixed(1) + 'px)';
+            });
+            raf = null;
+        });
+    }, { passive: true });
+}
+
+/* ============================================================
+   Init
+   ============================================================ */
+applyLang(currentLang());
+</script>
+</body>
+</html>
