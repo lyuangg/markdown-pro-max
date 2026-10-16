@@ -411,6 +411,17 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
 }
 .feature-media .shot:hover { transform: translateY(-6px) scale(1.01); box-shadow: var(--shadow-shot-hover); }
 .feature-media .shot img { display: block; width: 100%; height: auto; }
+/* 截图占位：图片缺失时显示，替换 assets/preview/pX.png 后自动隐藏 */
+.shot-placeholder {
+    position: absolute; inset: 0; display: none;
+    flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    color: #6b7280; font-size: 14px; text-align: center; line-height: 1.7; padding: 20px;
+    background: repeating-linear-gradient(45deg, rgba(0, 0, 0, .04) 0 12px, transparent 12px 24px), #f2f2f2;
+}
+.shot-placeholder code { font-size: 12px; background: rgba(0, 0, 0, .06); padding: 2px 8px; border-radius: 4px; }
+.shot-empty { position: relative; aspect-ratio: 16 / 10; }
+.shot-empty .shot-placeholder { display: flex; }
+.shot-empty img { visibility: hidden; }
 .feature-index {
     position: absolute; top: -22px; left: -22px; z-index: 2;
     width: 64px; height: 64px; border-radius: 18px;
@@ -756,6 +767,46 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
                 </div>
             </div>
         </div>
+
+        <div class="feature reveal">
+            <div class="feature-media">
+                <div class="shot" data-parallax="1">
+                    <img src="assets/preview/p6.png" alt="源码编辑" loading="lazy" onerror="this.closest('.shot').classList.add('shot-empty')">
+                    <div class="shot-placeholder">截图占位<div><code>assets/preview/p6.png</code></div></div>
+                </div>
+                <div class="feature-glow"></div>
+                <div class="feature-index">05</div>
+            </div>
+            <div class="feature-body">
+                <h3 class="feature-title"><span class="emoji">✏️</span> <span data-i18n="f5.title">源码编辑</span></h3>
+                <p class="feature-desc" data-i18n="f5.desc">在浏览器内直接编辑 Markdown 源码:自动缩进、括号引号自动补全、代码围栏补全,退出即应用,并可保存回原文件。</p>
+                <div class="feature-tags">
+                    <span class="tag" data-i18n="f5.t1">自动缩进</span>
+                    <span class="tag" data-i18n="f5.t2">括号补全</span>
+                    <span class="tag" data-i18n="f5.t3">保存到原文件</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature reveal">
+            <div class="feature-media">
+                <div class="shot" data-parallax="1">
+                    <img src="assets/preview/p7.png" alt="文档划线" loading="lazy" onerror="this.closest('.shot').classList.add('shot-empty')">
+                    <div class="shot-placeholder">截图占位<div><code>assets/preview/p7.png</code></div></div>
+                </div>
+                <div class="feature-glow"></div>
+                <div class="feature-index">06</div>
+            </div>
+            <div class="feature-body">
+                <h3 class="feature-title"><span class="emoji">🖍️</span> <span data-i18n="f6.title">文档划线</span></h3>
+                <p class="feature-desc" data-i18n="f6.desc">对文本、图片、代码块、表格、标题、段落等任意元素划线标记,标注持久保存,刷新后自动重定位,并可导出划线内容。</p>
+                <div class="feature-tags">
+                    <span class="tag" data-i18n="f6.t1">任意元素</span>
+                    <span class="tag" data-i18n="f6.t2">持久保存</span>
+                    <span class="tag" data-i18n="f6.t3">导出划线</span>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -787,6 +838,20 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
             <div class="card reveal" data-delay="1" style="padding:12px;">
                 <img src="assets/preview/p5.png" alt="智能表格" loading="lazy" style="width:100%;height:auto;border-radius:12px;display:block;">
                 <p style="padding:14px 8px 6px;text-align:center;" data-i18n="g5">智能表格</p>
+            </div>
+            <div class="card reveal" data-delay="2" style="padding:12px;">
+                <div class="shot" style="border-radius:12px;overflow:hidden;">
+                    <img src="assets/preview/p6.png" alt="源码编辑" loading="lazy" onerror="this.closest('.shot').classList.add('shot-empty')" style="width:100%;height:auto;display:block;">
+                    <div class="shot-placeholder">截图占位<div><code>assets/preview/p6.png</code></div></div>
+                </div>
+                <p style="padding:14px 8px 6px;text-align:center;" data-i18n="g6">源码编辑</p>
+            </div>
+            <div class="card reveal" style="padding:12px;">
+                <div class="shot" style="border-radius:12px;overflow:hidden;">
+                    <img src="assets/preview/p7.png" alt="文档划线" loading="lazy" onerror="this.closest('.shot').classList.add('shot-empty')" style="width:100%;height:auto;display:block;">
+                    <div class="shot-placeholder">截图占位<div><code>assets/preview/p7.png</code></div></div>
+                </div>
+                <p style="padding:14px 8px 6px;text-align:center;" data-i18n="g7">文档划线</p>
             </div>
         </div>
     </div>
@@ -859,6 +924,16 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
                 <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
                 <h4 data-i18n="m12.t">新标签页打开链接</h4>
                 <p data-i18n="m12.d">可配置在链接点击时于新标签页打开,保持阅读不中断。</p>
+            </div>
+            <div class="card reveal">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+                <h4 data-i18n="m13.t">源码编辑</h4>
+                <p data-i18n="m13.d">浏览器内直接编辑源码,自动缩进与括号补全,可保存回原文件。</p>
+            </div>
+            <div class="card reveal" data-delay="1">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4Z"/></svg></div>
+                <h4 data-i18n="m14.t">文档划线</h4>
+                <p data-i18n="m14.d">对文本或元素划线标记,标注持久保存,刷新后自动重定位。</p>
             </div>
         </div>
     </div>
@@ -965,21 +1040,23 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
 var I18N = {
     'zh': {
         'nav.features': '功能', 'nav.showcase': '截图', 'nav.pro': '专业版', 'nav.cta': '安装',
-        'hero.badge': '专为 Markdown 阅读打造 · Chrome · Edge 扩展',
+        'hero.badge': '专为 Markdown 阅读与编辑打造 · Chrome · Edge 扩展',
         'hero.t1': '让 Markdown 阅读', 'hero.t2': '赏心悦目',
-        'hero.sub': 'Markdown Pro Max 是一款功能强大的 Markdown 查看器——Mermaid 图表、数学公式、代码高亮、智能表格、文件批注与多种格式导出,打开 .md 文件即可享受沉浸式阅读。',
+        'hero.sub': 'Markdown Pro Max 是一款功能强大的 Markdown 查看器与编辑器——Mermaid 图表、数学公式、代码高亮、智能表格、划线批注、源码编辑与多格式导出,打开 .md 文件即可开始。',
         'hero.cta1': '安装到 Chrome', 'hero.cta3': '安装到 Edge', 'hero.cta2': '查看隐私政策',
         'hero.s1': '大核心功能', 'hero.s2': '代码语言高亮', 'hero.s3': '种配色主题', 'hero.s4': '种导出格式',
         'chip.mermaid': 'Mermaid', 'chip.math': 'KaTeX 公式', 'chip.code': '代码高亮', 'chip.task': '任务列表',
         'features.eyebrow': '核心功能', 'features.title1': '把每个细节', 'features.title2': '打磨到位',
-        'features.sub': '从渲染到批注,覆盖 Markdown 阅读的全部需求。',
+        'features.sub': '从渲染、编辑到批注,覆盖 Markdown 阅读与写作的全部需求。',
         'f1.title': '智能表格', 'f1.desc': '一键复制为 Markdown、Excel(TSV)或 HTML;支持列排序、斑马纹、边框与宽度模式,处理数据更顺手。', 'f1.t1': '列排序', 'f1.t2': 'Markdown · Excel · HTML', 'f1.t3': '样式定制',
         'f2.title': '一键导出', 'f2.desc': '将文档一键导出为 PDF、PNG 或 HTML,完整保留样式与高亮,分享、归档都从容自如。',
         'f3.title': '文件批注', 'f3.desc': '画笔、直线、矩形、圆形、文字、高亮与橡皮擦,自定义颜色与粗细,支持撤销重做,并可导出带批注的 PDF。', 'f3.t1': '画笔', 'f3.t2': '高亮', 'f3.t3': '撤销重做',
         'f4.title': '沉浸阅读体验', 'f4.desc': '阅读进度条、字数统计、读完撒花动画,让阅读的每一刻都有回应。', 'f4.t1': '进度条', 'f4.t2': '字数统计', 'f4.t3': '撒花动画',
+        'f5.title': '源码编辑', 'f5.desc': '在浏览器内直接编辑 Markdown 源码:自动缩进、括号引号自动补全、代码围栏补全,退出即应用,并可保存回原文件。', 'f5.t1': '自动缩进', 'f5.t2': '括号补全', 'f5.t3': '保存到原文件',
+        'f6.title': '文档划线', 'f6.desc': '对文本、图片、代码块、表格、标题、段落等任意元素划线标记,标注持久保存,刷新后自动重定位,并可导出划线内容。', 'f6.t1': '任意元素', 'f6.t2': '持久保存', 'f6.t3': '导出划线',
         'showcase.eyebrow': '界面预览', 'showcase.title1': '不止好看', 'showcase.title2': ',更实用',
         'showcase.sub': '从阅读到批注,完整的工作流一览。',
-        'g1': '阅读完成动画', 'g2': '一键导出', 'g3': '文件批注', 'g4': 'Mermaid · 公式 · 主题', 'g5': '智能表格',
+        'g1': '阅读完成动画', 'g2': '一键导出', 'g3': '文件批注', 'g4': 'Mermaid · 公式 · 主题', 'g5': '智能表格', 'g6': '源码编辑', 'g7': '文档划线',
         'more.eyebrow': '更多特性', 'more.title1': '细节丰富,', 'more.title2': '总有一处打动你',
         'm1.t': '大纲导航', 'm1.d': '自动提取标题生成目录,滚动联动高亮当前章节,支持搜索过滤与拖拽调宽。',
         'm2.t': '多主题系统', 'm2.d': '明亮、暗黑、护眼三套主题,自动跟随系统切换并记忆你的偏好。',
@@ -993,10 +1070,12 @@ var I18N = {
         'm10.t': '多语言', 'm10.d': '界面支持简体中文与 English,随时一键切换。',
         'm11.t': '图片增强', 'm11.d': '支持 {width=…} 属性控制宽高,点击图片即可放大查看。',
         'm12.t': '新标签页打开链接', 'm12.d': '可配置在链接点击时于新标签页打开,保持阅读不中断。',
+        'm13.t': '源码编辑', 'm13.d': '浏览器内直接编辑源码,自动缩进与括号补全,可保存回原文件。',
+        'm14.t': '文档划线', 'm14.d': '对文本或元素划线标记,标注持久保存,刷新后自动重定位。',
         'how.eyebrow': '快速上手', 'how.title1': '三步', 'how.title2': ',即刻开始',
         'how.s1t': '安装扩展', 'how.s1d': '前往 Chrome 或 Edge 应用商店,一键添加 Markdown Pro Max。',
-        'how.s2t': '打开 .md 文件', 'how.s2d': '在浏览器中打开本地或在线 Markdown 文件。',
-        'how.s3t': '沉浸阅读', 'how.s3d': '渲染自动完成,尽情享受赏心悦目的阅读体验。',
+        'how.s2t': '打开 .md 文件', 'how.s2d': '先在扩展详情页开启「允许访问文件 URL」,再打开或直接拖入 .md 文件。',
+        'how.s3t': '沉浸阅读', 'how.s3d': '渲染自动完成,可沉浸阅读,也能直接编辑源码并保存。',
         'pro.title': '一次购买,终身使用',
         'pro.desc': '专业版解锁全部能力,无订阅、无隐藏费用。所有数据依旧只保存在你的浏览器本地。',
         'pro.p1': '无限导出,不受试用限制', 'pro.p2': '全部批注与导出工具', 'pro.p3': '一次付款,永久有效', 'pro.p4': '数据永远留在本地',
@@ -1012,21 +1091,23 @@ var I18N = {
     },
     'en': {
         'nav.features': 'Features', 'nav.showcase': 'Screenshots', 'nav.pro': 'Pro', 'nav.cta': 'Install',
-        'hero.badge': 'Built for Markdown Reading · Chrome & Edge Extension',
+        'hero.badge': 'Built for Markdown Reading & Editing · Chrome & Edge Extension',
         'hero.t1': 'Make Markdown reading', 'hero.t2': 'truly enjoyable',
-        'hero.sub': 'Markdown Pro Max is a powerful Markdown viewer — Mermaid diagrams, math formulas, code highlighting, smart tables, annotations and multi-format export, ready the moment you open a .md file.',
+        'hero.sub': 'Markdown Pro Max is a powerful Markdown viewer and editor — Mermaid diagrams, math formulas, code highlighting, smart tables, highlights & annotations, source editing and multi-format export, ready the moment you open a .md file.',
         'hero.cta1': 'Install on Chrome', 'hero.cta3': 'Install on Edge', 'hero.cta2': 'Privacy Policy',
         'hero.s1': 'Core Features', 'hero.s2': 'Languages Highlighted', 'hero.s3': 'Color Themes', 'hero.s4': 'Export Formats',
         'chip.mermaid': 'Mermaid', 'chip.math': 'KaTeX Math', 'chip.code': 'Code Highlight', 'chip.task': 'Task Lists',
         'features.eyebrow': 'Core Features', 'features.title1': 'Every detail,', 'features.title2': 'crafted to perfection',
-        'features.sub': 'From rendering to annotation — covering every Markdown reading need.',
+        'features.sub': 'From rendering and editing to annotation — covering every Markdown reading and writing need.',
         'f1.title': 'Smart Tables', 'f1.desc': 'Copy GFM tables as Markdown, Excel (TSV) or HTML in one click. Column sorting, zebra stripes, borders and width modes make data a breeze.', 'f1.t1': 'Sorting', 'f1.t2': 'Markdown · Excel · HTML', 'f1.t3': 'Styling',
         'f2.title': 'One-Click Export', 'f2.desc': 'Export your document to PDF, PNG or HTML in one click — styles and highlighting fully preserved.',
         'f3.title': 'File Annotation', 'f3.desc': 'Pen, line, rectangle, circle, text, highlighter and eraser with adjustable color and width, undo/redo, and annotated-PDF export.', 'f3.t1': 'Pen', 'f3.t2': 'Highlighter', 'f3.t3': 'Undo / Redo',
         'f4.title': 'Immersive Reading', 'f4.desc': 'A progress bar, word count and a confetti celebration when you finish reading — every moment feels rewarding.', 'f4.t1': 'Progress bar', 'f4.t2': 'Word count', 'f4.t3': 'Confetti',
+        'f5.title': 'Source Editing', 'f5.desc': 'Edit Markdown right in the browser: auto-indent, auto-close brackets & quotes and code-fence completion. Changes apply on exit and can be saved back to the original file.', 'f5.t1': 'Auto-indent', 'f5.t2': 'Auto-close', 'f5.t3': 'Save to file',
+        'f6.title': 'Document Highlighting', 'f6.desc': 'Highlight any element — text, images, code blocks, tables, headings, paragraphs and more. Marks persist and relocate after a reload, and highlighted content can be exported.', 'f6.t1': 'Any element', 'f6.t2': 'Persistent', 'f6.t3': 'Export',
         'showcase.eyebrow': 'Gallery', 'showcase.title1': 'Beautiful', 'showcase.title2': 'and practical',
         'showcase.sub': 'From reading to annotating — the complete workflow at a glance.',
-        'g1': 'Reading Completion Animation', 'g2': 'One-Click Export', 'g3': 'File Annotation', 'g4': 'Mermaid · Math · Themes', 'g5': 'Smart Tables',
+        'g1': 'Reading Completion Animation', 'g2': 'One-Click Export', 'g3': 'File Annotation', 'g4': 'Mermaid · Math · Themes', 'g5': 'Smart Tables', 'g6': 'Source Editing', 'g7': 'Document Highlighting',
         'more.eyebrow': 'More Features', 'more.title1': 'Rich in detail,', 'more.title2': 'something for everyone',
         'm1.t': 'Outline Navigation', 'm1.d': 'Auto-generate a TOC from headings with scroll-sync highlighting, search filter and draggable width.',
         'm2.t': 'Theme System', 'm2.d': 'Light, dark and eye-comfort themes that follow your system and remember your choice.',
@@ -1040,10 +1121,12 @@ var I18N = {
         'm10.t': 'Bilingual UI', 'm10.d': 'Interface available in 简体中文 and English, switchable anytime.',
         'm11.t': 'Image Enhancement', 'm11.d': 'Control size with {width=…} attributes and click images to zoom in.',
         'm12.t': 'Open Links in New Tab', 'm12.d': 'Configurable to open links in a new tab so your reading never breaks.',
+        'm13.t': 'Source Editing', 'm13.d': 'Edit the source in-browser with auto-indent and bracket completion; save back to the original file.',
+        'm14.t': 'Document Highlighting', 'm14.d': 'Highlight text or elements — persisted and auto-relocated after a reload.',
         'how.eyebrow': 'Quick Start', 'how.title1': 'Three steps', 'how.title2': 'to get started',
         'how.s1t': 'Install', 'how.s1d': 'Add Markdown Pro Max from the Chrome Web Store or Edge Add-ons in one click.',
-        'how.s2t': 'Open a .md file', 'how.s2d': 'Open a local or online Markdown file in your browser.',
-        'how.s3t': 'Enjoy reading', 'how.s3d': 'Rendering happens automatically — just sit back and read.',
+        'how.s2t': 'Open a .md file', 'how.s2d': 'First enable \"Allow access to file URLs\" on the extension details page, then open or drag in a .md file.',
+        'how.s3t': 'Enjoy reading', 'how.s3d': 'Rendering happens automatically — read it, or edit the source and save.',
         'pro.title': 'One-time purchase, lifetime access',
         'pro.desc': 'Unlock every capability with no subscriptions and no hidden fees. Your data still stays in your browser.',
         'pro.p1': 'Unlimited exports, no trial limits', 'pro.p2': 'All annotation & export tools', 'pro.p3': 'One payment, lifetime access', 'pro.p4': 'Data stays local, always',
