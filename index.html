@@ -448,6 +448,9 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
     background: var(--tag-bg);
     border: 1px solid var(--tag-border);
 }
+.feature-cta { margin-top: 22px; display: inline-flex; }
+.feature-link { margin-top: 12px; font-size: 13px; color: var(--muted); word-break: break-all; }
+.feature-link code { background: var(--tag-bg); border: 1px solid var(--tag-border); padding: 2px 8px; border-radius: 4px; }
 .feature:nth-child(even) .feature-media { order: 2; }
 
 /* ============================================================
@@ -638,6 +641,7 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
         </a>
         <div class="nav-links" id="navLinks">
             <a href="#features" data-i18n="nav.features">功能</a>
+            <a href="#vim-plugin" data-i18n="nav.plugin">插件</a>
             <a href="#showcase" data-i18n="nav.showcase">截图</a>
             <a href="#pro" data-i18n="nav.pro">专业版</a>
             <button class="lang-toggle" id="langToggle" type="button">EN</button>
@@ -663,7 +667,7 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
             <span class="line gradient-text reveal" data-delay="1" data-i18n="hero.t2">赏心悦目</span>
         </h1>
         <p class="hero-sub reveal" data-delay="2" data-i18n="hero.sub">
-            Markdown Pro Max 是一款功能强大的 Markdown 查看器——Mermaid 图表、数学公式、代码高亮、智能表格、文件批注与多种格式导出,打开 .md 文件即可享受沉浸式阅读。
+            能读，更能写。Markdown Pro Max 是一款功能强大的浏览器扩展：Mermaid、公式、代码高亮、智能表格、批注、幻灯片演示、源码编辑与导出齐全——打开 .md 就用，无需安装 App。
         </p>
         <div class="hero-cta reveal" data-delay="3">
             <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/markdown-pro-max/jlflljhflgneefhminfcgplembjcpbie" target="_blank" rel="noopener" data-i18n="hero.cta1">安装到 Chrome</a>
@@ -671,7 +675,7 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
             <a class="btn btn-ghost" href="privacy.html" data-i18n="hero.cta2">查看隐私政策</a>
         </div>
         <div class="hero-stats reveal" data-delay="3">
-            <div class="stat"><div class="num">5</div><div class="label" data-i18n="hero.s1">大核心功能</div></div>
+            <div class="stat"><div class="num">8</div><div class="label" data-i18n="hero.s1">大核心功能</div></div>
             <div class="stat"><div class="num">100+</div><div class="label" data-i18n="hero.s2">代码语言高亮</div></div>
             <div class="stat"><div class="num">6</div><div class="label" data-i18n="hero.s3">种配色主题</div></div>
             <div class="stat"><div class="num">3</div><div class="label" data-i18n="hero.s4">种导出格式</div></div>
@@ -708,11 +712,11 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
             </div>
             <div class="feature-body">
                 <h3 class="feature-title"><span class="emoji">📋</span> <span data-i18n="f1.title">智能表格</span></h3>
-                <p class="feature-desc" data-i18n="f1.desc">一键复制为 Markdown、Excel(TSV)或 HTML;支持列排序、斑马纹、边框与宽度模式,处理数据更顺手。</p>
+                <p class="feature-desc" data-i18n="f1.desc">一键复制为 Markdown、Excel(TSV)或 HTML;支持列排序和对齐,处理数据更顺手。</p>
                 <div class="feature-tags">
                     <span class="tag" data-i18n="f1.t1">列排序</span>
-                    <span class="tag" data-i18n="f1.t2">Markdown · Excel · HTML</span>
-                    <span class="tag" data-i18n="f1.t3">样式定制</span>
+                    <span class="tag" data-i18n="f1.t2">列对齐</span>
+                    <span class="tag" data-i18n="f1.t3">Markdown · Excel · HTML</span>
                 </div>
             </div>
         </div>
@@ -725,7 +729,7 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
             </div>
             <div class="feature-body">
                 <h3 class="feature-title"><span class="emoji">📤</span> <span data-i18n="f2.title">一键导出</span></h3>
-                <p class="feature-desc" data-i18n="f2.desc">将文档一键导出为 PDF、PNG 或 HTML,完整保留样式与高亮,分享、归档都从容自如。</p>
+                <p class="feature-desc" data-i18n="f2.desc">将文档一键导出为 PDF、PNG 或 HTML,分享、归档都从容自如。</p>
                 <div class="feature-tags">
                     <span class="tag">PDF</span>
                     <span class="tag">PNG</span>
@@ -742,11 +746,11 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
             </div>
             <div class="feature-body">
                 <h3 class="feature-title"><span class="emoji">🖊️</span> <span data-i18n="f3.title">文件批注</span></h3>
-                <p class="feature-desc" data-i18n="f3.desc">画笔、直线、矩形、圆形、文字、高亮与橡皮擦,自定义颜色与粗细,支持撤销重做,并可导出带批注的 PDF。</p>
+                <p class="feature-desc" data-i18n="f3.desc">支持画笔、直线、矩形、圆形、文字、高亮与橡皮擦,并可导出带批注的 PDF。</p>
                 <div class="feature-tags">
                     <span class="tag" data-i18n="f3.t1">画笔</span>
                     <span class="tag" data-i18n="f3.t2">高亮</span>
-                    <span class="tag" data-i18n="f3.t3">撤销重做</span>
+                    <span class="tag" data-i18n="f3.t3">导出 PDF</span>
                 </div>
             </div>
         </div>
@@ -779,10 +783,10 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
             </div>
             <div class="feature-body">
                 <h3 class="feature-title"><span class="emoji">✏️</span> <span data-i18n="f5.title">源码编辑</span></h3>
-                <p class="feature-desc" data-i18n="f5.desc">在浏览器内直接编辑 Markdown 源码:自动缩进、括号引号自动补全、代码围栏补全,退出即应用,并可保存回原文件。</p>
+                <p class="feature-desc" data-i18n="f5.desc">在浏览器内直接编辑 Markdown 文件,还支持斜杠命令,让输入更便捷。</p>
                 <div class="feature-tags">
-                    <span class="tag" data-i18n="f5.t1">自动缩进</span>
-                    <span class="tag" data-i18n="f5.t2">括号补全</span>
+                    <span class="tag" data-i18n="f5.t1">浏览器内编辑</span>
+                    <span class="tag" data-i18n="f5.t2">斜杠命令</span>
                     <span class="tag" data-i18n="f5.t3">保存到原文件</span>
                 </div>
             </div>
@@ -799,12 +803,54 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
             </div>
             <div class="feature-body">
                 <h3 class="feature-title"><span class="emoji">🖍️</span> <span data-i18n="f6.title">文档划线</span></h3>
-                <p class="feature-desc" data-i18n="f6.desc">对文本、图片、代码块、表格、标题、段落等任意元素划线标记,标注持久保存,刷新后自动重定位,并可导出划线内容。</p>
+                <p class="feature-desc" data-i18n="f6.desc">对文本、图片、代码块、表格、标题、段落等任意元素划线标记,标注持久保存,并可导出划线内容。</p>
                 <div class="feature-tags">
                     <span class="tag" data-i18n="f6.t1">任意元素</span>
                     <span class="tag" data-i18n="f6.t2">持久保存</span>
                     <span class="tag" data-i18n="f6.t3">导出划线</span>
                 </div>
+            </div>
+        </div>
+
+        <div class="feature reveal">
+            <div class="feature-media">
+                <div class="shot" data-parallax="1">
+                    <img src="assets/preview/p8.png" alt="幻灯片预览" loading="lazy" onerror="this.closest('.shot').classList.add('shot-empty')">
+                    <div class="shot-placeholder">截图占位<div><code>assets/preview/p8.png</code></div></div>
+                </div>
+                <div class="feature-glow"></div>
+                <div class="feature-index">07</div>
+            </div>
+            <div class="feature-body">
+                <h3 class="feature-title"><span class="emoji">🎬</span> <span data-i18n="f7.title">幻灯片预览</span></h3>
+                <p class="feature-desc" data-i18n="f7.desc">把文档一键切换为全屏演示。</p>
+                <div class="feature-tags">
+                    <span class="tag" data-i18n="f7.t1">一键切换</span>
+                    <span class="tag" data-i18n="f7.t2">全屏演示</span>
+                    <span class="tag" data-i18n="f7.t3">键盘翻页</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature reveal" id="vim-plugin">
+            <div class="feature-media">
+                <div class="shot" data-parallax="1">
+                    <img src="assets/preview/p9.png" alt="Vim / Neovim 插件" loading="lazy" onerror="this.closest('.shot').classList.add('shot-empty')">
+                    <div class="shot-placeholder">截图占位<div><code>assets/preview/p9.png</code></div></div>
+                </div>
+                <div class="feature-glow"></div>
+                <div class="feature-index">08</div>
+            </div>
+            <div class="feature-body">
+                <h3 class="feature-title"><span class="emoji">🧩</span> <span data-i18n="f8.title">Vim / Neovim 插件</span></h3>
+                <p class="feature-desc" data-i18n="f8.desc">在 Vim / Neovim 中一键打开浏览器预览,滚动实时同步。</p>
+                <div class="feature-tags">
+                    <span class="tag" data-i18n="f8.t1">滚动同步</span>
+                    <span class="tag" data-i18n="f8.t2">一键预览</span>
+                    <span class="tag" data-i18n="f8.t3">浏览器预览</span>
+                </div>
+                <a class="btn btn-ghost feature-cta" href="https://github.com/lyuangg/vim-md-preview" target="_blank" rel="noopener" data-i18n="f8.cta">查看 Vim / Neovim 插件</a>
+                <p class="feature-link"><code>github.com/lyuangg/vim-md-preview</code></p>
             </div>
         </div>
     </div>
@@ -852,6 +898,20 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
                     <div class="shot-placeholder">截图占位<div><code>assets/preview/p7.png</code></div></div>
                 </div>
                 <p style="padding:14px 8px 6px;text-align:center;" data-i18n="g7">文档划线</p>
+            </div>
+            <div class="card reveal" data-delay="1" style="padding:12px;">
+                <div class="shot" style="border-radius:12px;overflow:hidden;">
+                    <img src="assets/preview/p8.png" alt="幻灯片预览" loading="lazy" onerror="this.closest('.shot').classList.add('shot-empty')" style="width:100%;height:auto;display:block;">
+                    <div class="shot-placeholder">截图占位<div><code>assets/preview/p8.png</code></div></div>
+                </div>
+                <p style="padding:14px 8px 6px;text-align:center;" data-i18n="g8">幻灯片预览</p>
+            </div>
+            <div class="card reveal" data-delay="2" style="padding:12px;">
+                <div class="shot" style="border-radius:12px;overflow:hidden;">
+                    <img src="assets/preview/p9.png" alt="Vim / Neovim 插件" loading="lazy" onerror="this.closest('.shot').classList.add('shot-empty')" style="width:100%;height:auto;display:block;">
+                    <div class="shot-placeholder">截图占位<div><code>assets/preview/p9.png</code></div></div>
+                </div>
+                <p style="padding:14px 8px 6px;text-align:center;" data-i18n="g9">Vim / Neovim 插件</p>
             </div>
         </div>
     </div>
@@ -1020,6 +1080,7 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
                 <h5 data-i18n="footer.p2">资源</h5>
                 <a href="privacy.html" data-i18n="footer.l4">隐私政策</a>
                 <a href="https://github.com/lyuangg/markdown-pro-max" target="_blank" rel="noopener" data-i18n="footer.l5">GitHub</a>
+                <a href="https://github.com/lyuangg/vim-md-preview" target="_blank" rel="noopener" data-i18n="footer.l8">Vim / Neovim 插件</a>
                 <a href="https://chromewebstore.google.com/detail/markdown-pro-max/jlflljhflgneefhminfcgplembjcpbie" target="_blank" rel="noopener" data-i18n="footer.l6">Chrome 应用商店</a>
                 <a href="https://microsoftedge.microsoft.com/addons/detail/markdown-pro-max/nbenfadeigadlcachemmdiineeeeapen" target="_blank" rel="noopener" data-i18n="footer.l7">Edge 应用商店</a>
             </div>
@@ -1039,24 +1100,26 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
    ============================================================ */
 var I18N = {
     'zh': {
-        'nav.features': '功能', 'nav.showcase': '截图', 'nav.pro': '专业版', 'nav.cta': '安装',
+        'nav.features': '功能', 'nav.plugin': '插件', 'nav.showcase': '截图', 'nav.pro': '专业版', 'nav.cta': '安装',
         'hero.badge': '专为 Markdown 阅读与编辑打造 · Chrome · Edge 扩展',
         'hero.t1': '让 Markdown 阅读', 'hero.t2': '赏心悦目',
-        'hero.sub': 'Markdown Pro Max 是一款功能强大的 Markdown 查看器与编辑器——Mermaid 图表、数学公式、代码高亮、智能表格、划线批注、源码编辑与多格式导出,打开 .md 文件即可开始。',
+        'hero.sub': '能读，更能写。Markdown Pro Max 是一款功能强大的浏览器扩展：Mermaid、公式、代码高亮、智能表格、批注、幻灯片演示、源码编辑与导出齐全——打开 .md 就用，无需安装 App。',
         'hero.cta1': '安装到 Chrome', 'hero.cta3': '安装到 Edge', 'hero.cta2': '查看隐私政策',
         'hero.s1': '大核心功能', 'hero.s2': '代码语言高亮', 'hero.s3': '种配色主题', 'hero.s4': '种导出格式',
         'chip.mermaid': 'Mermaid', 'chip.math': 'KaTeX 公式', 'chip.code': '代码高亮', 'chip.task': '任务列表',
         'features.eyebrow': '核心功能', 'features.title1': '把每个细节', 'features.title2': '打磨到位',
         'features.sub': '从渲染、编辑到批注,覆盖 Markdown 阅读与写作的全部需求。',
-        'f1.title': '智能表格', 'f1.desc': '一键复制为 Markdown、Excel(TSV)或 HTML;支持列排序、斑马纹、边框与宽度模式,处理数据更顺手。', 'f1.t1': '列排序', 'f1.t2': 'Markdown · Excel · HTML', 'f1.t3': '样式定制',
-        'f2.title': '一键导出', 'f2.desc': '将文档一键导出为 PDF、PNG 或 HTML,完整保留样式与高亮,分享、归档都从容自如。',
-        'f3.title': '文件批注', 'f3.desc': '画笔、直线、矩形、圆形、文字、高亮与橡皮擦,自定义颜色与粗细,支持撤销重做,并可导出带批注的 PDF。', 'f3.t1': '画笔', 'f3.t2': '高亮', 'f3.t3': '撤销重做',
+        'f1.title': '智能表格', 'f1.desc': '一键复制为 Markdown、Excel(TSV)或 HTML;支持列排序和对齐,处理数据更顺手。', 'f1.t1': '列排序', 'f1.t2': '列对齐', 'f1.t3': 'Markdown · Excel · HTML',
+        'f2.title': '一键导出', 'f2.desc': '将文档一键导出为 PDF、PNG 或 HTML,分享、归档都从容自如。',
+        'f3.title': '文件批注', 'f3.desc': '支持画笔、直线、矩形、圆形、文字、高亮与橡皮擦,并可导出带批注的 PDF。', 'f3.t1': '画笔', 'f3.t2': '高亮', 'f3.t3': '导出 PDF',
         'f4.title': '沉浸阅读体验', 'f4.desc': '阅读进度条、字数统计、读完撒花动画,让阅读的每一刻都有回应。', 'f4.t1': '进度条', 'f4.t2': '字数统计', 'f4.t3': '撒花动画',
-        'f5.title': '源码编辑', 'f5.desc': '在浏览器内直接编辑 Markdown 源码:自动缩进、括号引号自动补全、代码围栏补全,退出即应用,并可保存回原文件。', 'f5.t1': '自动缩进', 'f5.t2': '括号补全', 'f5.t3': '保存到原文件',
-        'f6.title': '文档划线', 'f6.desc': '对文本、图片、代码块、表格、标题、段落等任意元素划线标记,标注持久保存,刷新后自动重定位,并可导出划线内容。', 'f6.t1': '任意元素', 'f6.t2': '持久保存', 'f6.t3': '导出划线',
+        'f5.title': '源码编辑', 'f5.desc': '在浏览器内直接编辑 Markdown 文件,还支持斜杠命令,让输入更便捷。', 'f5.t1': '浏览器内编辑', 'f5.t2': '斜杠命令', 'f5.t3': '保存到原文件',
+        'f6.title': '文档划线', 'f6.desc': '对文本、图片、代码块、表格、标题、段落等任意元素划线标记,标注持久保存,并可导出划线内容。', 'f6.t1': '任意元素', 'f6.t2': '持久保存', 'f6.t3': '导出划线',
+        'f7.title': '幻灯片预览', 'f7.desc': '把文档一键切换为全屏演示。', 'f7.t1': '一键切换', 'f7.t2': '全屏演示', 'f7.t3': '键盘翻页',
+        'f8.title': 'Vim / Neovim 插件', 'f8.desc': '在 Vim / Neovim 中一键打开浏览器预览,滚动实时同步。', 'f8.t1': '滚动同步', 'f8.t2': '一键预览', 'f8.t3': '浏览器预览', 'f8.cta': '查看 Vim / Neovim 插件',
         'showcase.eyebrow': '界面预览', 'showcase.title1': '不止好看', 'showcase.title2': ',更实用',
         'showcase.sub': '从阅读到批注,完整的工作流一览。',
-        'g1': '阅读完成动画', 'g2': '一键导出', 'g3': '文件批注', 'g4': 'Mermaid · 公式 · 主题', 'g5': '智能表格', 'g6': '源码编辑', 'g7': '文档划线',
+        'g1': '阅读完成动画', 'g2': '一键导出', 'g3': '文件批注', 'g4': 'Mermaid · 公式 · 主题', 'g5': '智能表格', 'g6': '源码编辑', 'g7': '文档划线', 'g8': '幻灯片预览', 'g9': 'Vim / Neovim 插件',
         'more.eyebrow': '更多特性', 'more.title1': '细节丰富,', 'more.title2': '总有一处打动你',
         'm1.t': '大纲导航', 'm1.d': '自动提取标题生成目录,滚动联动高亮当前章节,支持搜索过滤与拖拽调宽。',
         'm2.t': '多主题系统', 'm2.d': '明亮、暗黑、护眼三套主题,自动跟随系统切换并记忆你的偏好。',
@@ -1086,28 +1149,30 @@ var I18N = {
         'cta.note': '免费使用 · 可选升级专业版 · 无需注册账号',
         'footer.tagline': '让 Markdown 阅读赏心悦目的 Chrome · Edge 扩展。',
         'footer.p1': '产品', 'footer.l1': '核心功能', 'footer.l2': '界面预览', 'footer.l3': '专业版',
-        'footer.p2': '资源', 'footer.l4': '隐私政策', 'footer.l5': 'GitHub', 'footer.l6': 'Chrome 应用商店', 'footer.l7': 'Edge 应用商店',
+        'footer.p2': '资源', 'footer.l4': '隐私政策', 'footer.l5': 'GitHub', 'footer.l6': 'Chrome 应用商店', 'footer.l7': 'Edge 应用商店', 'footer.l8': 'Vim / Neovim 插件',
         'footer.rights': '保留所有权利 · All rights reserved.'
     },
     'en': {
-        'nav.features': 'Features', 'nav.showcase': 'Screenshots', 'nav.pro': 'Pro', 'nav.cta': 'Install',
+        'nav.features': 'Features', 'nav.plugin': 'Plugin', 'nav.showcase': 'Screenshots', 'nav.pro': 'Pro', 'nav.cta': 'Install',
         'hero.badge': 'Built for Markdown Reading & Editing · Chrome & Edge Extension',
         'hero.t1': 'Make Markdown reading', 'hero.t2': 'truly enjoyable',
-        'hero.sub': 'Markdown Pro Max is a powerful Markdown viewer and editor — Mermaid diagrams, math formulas, code highlighting, smart tables, highlights & annotations, source editing and multi-format export, ready the moment you open a .md file.',
+        'hero.sub': 'More than a viewer — a full Markdown editor. Markdown Pro Max is a powerful browser extension with Mermaid, math, code highlighting, smart tables, annotations, slideshow presentations, source editing and export — open a .md file and go, no desktop app required.',
         'hero.cta1': 'Install on Chrome', 'hero.cta3': 'Install on Edge', 'hero.cta2': 'Privacy Policy',
         'hero.s1': 'Core Features', 'hero.s2': 'Languages Highlighted', 'hero.s3': 'Color Themes', 'hero.s4': 'Export Formats',
         'chip.mermaid': 'Mermaid', 'chip.math': 'KaTeX Math', 'chip.code': 'Code Highlight', 'chip.task': 'Task Lists',
         'features.eyebrow': 'Core Features', 'features.title1': 'Every detail,', 'features.title2': 'crafted to perfection',
         'features.sub': 'From rendering and editing to annotation — covering every Markdown reading and writing need.',
-        'f1.title': 'Smart Tables', 'f1.desc': 'Copy GFM tables as Markdown, Excel (TSV) or HTML in one click. Column sorting, zebra stripes, borders and width modes make data a breeze.', 'f1.t1': 'Sorting', 'f1.t2': 'Markdown · Excel · HTML', 'f1.t3': 'Styling',
-        'f2.title': 'One-Click Export', 'f2.desc': 'Export your document to PDF, PNG or HTML in one click — styles and highlighting fully preserved.',
-        'f3.title': 'File Annotation', 'f3.desc': 'Pen, line, rectangle, circle, text, highlighter and eraser with adjustable color and width, undo/redo, and annotated-PDF export.', 'f3.t1': 'Pen', 'f3.t2': 'Highlighter', 'f3.t3': 'Undo / Redo',
+        'f1.title': 'Smart Tables', 'f1.desc': 'Copy tables as Markdown, Excel (TSV) or HTML in one click. Column sorting and alignment make data handling easier.', 'f1.t1': 'Sorting', 'f1.t2': 'Alignment', 'f1.t3': 'Markdown · Excel · HTML',
+        'f2.title': 'One-Click Export', 'f2.desc': 'Export your document to PDF, PNG or HTML in one click — easy to share and archive.',
+        'f3.title': 'File Annotation', 'f3.desc': 'Pen, line, rectangle, circle, text, highlighter and eraser — export annotated PDFs in one click.', 'f3.t1': 'Pen', 'f3.t2': 'Highlighter', 'f3.t3': 'PDF Export',
         'f4.title': 'Immersive Reading', 'f4.desc': 'A progress bar, word count and a confetti celebration when you finish reading — every moment feels rewarding.', 'f4.t1': 'Progress bar', 'f4.t2': 'Word count', 'f4.t3': 'Confetti',
-        'f5.title': 'Source Editing', 'f5.desc': 'Edit Markdown right in the browser: auto-indent, auto-close brackets & quotes and code-fence completion. Changes apply on exit and can be saved back to the original file.', 'f5.t1': 'Auto-indent', 'f5.t2': 'Auto-close', 'f5.t3': 'Save to file',
-        'f6.title': 'Document Highlighting', 'f6.desc': 'Highlight any element — text, images, code blocks, tables, headings, paragraphs and more. Marks persist and relocate after a reload, and highlighted content can be exported.', 'f6.t1': 'Any element', 'f6.t2': 'Persistent', 'f6.t3': 'Export',
+        'f5.title': 'Source Editing', 'f5.desc': 'Edit Markdown files right in the browser, with slash commands to make typing faster.', 'f5.t1': 'In-browser editing', 'f5.t2': 'Slash commands', 'f5.t3': 'Save to file',
+        'f6.title': 'Document Highlighting', 'f6.desc': 'Highlight any element — text, images, code blocks, tables, headings, paragraphs and more. Marks persist and can be exported.', 'f6.t1': 'Any element', 'f6.t2': 'Persistent', 'f6.t3': 'Export',
+        'f7.title': 'Slideshow Preview', 'f7.desc': 'Turn the document into a full-screen presentation with one click.', 'f7.t1': 'One-click', 'f7.t2': 'Full screen', 'f7.t3': 'Keyboard navigation',
+        'f8.title': 'Vim / Neovim Plugin', 'f8.desc': 'Open the browser preview from Vim or Neovim with real-time scroll sync.', 'f8.t1': 'Scroll sync', 'f8.t2': 'One-click preview', 'f8.t3': 'Browser preview', 'f8.cta': 'View the Vim / Neovim plugin',
         'showcase.eyebrow': 'Gallery', 'showcase.title1': 'Beautiful', 'showcase.title2': 'and practical',
         'showcase.sub': 'From reading to annotating — the complete workflow at a glance.',
-        'g1': 'Reading Completion Animation', 'g2': 'One-Click Export', 'g3': 'File Annotation', 'g4': 'Mermaid · Math · Themes', 'g5': 'Smart Tables', 'g6': 'Source Editing', 'g7': 'Document Highlighting',
+        'g1': 'Reading Completion Animation', 'g2': 'One-Click Export', 'g3': 'File Annotation', 'g4': 'Mermaid · Math · Themes', 'g5': 'Smart Tables', 'g6': 'Source Editing', 'g7': 'Document Highlighting', 'g8': 'Slideshow Preview', 'g9': 'Vim / Neovim Plugin',
         'more.eyebrow': 'More Features', 'more.title1': 'Rich in detail,', 'more.title2': 'something for everyone',
         'm1.t': 'Outline Navigation', 'm1.d': 'Auto-generate a TOC from headings with scroll-sync highlighting, search filter and draggable width.',
         'm2.t': 'Theme System', 'm2.d': 'Light, dark and eye-comfort themes that follow your system and remember your choice.',
@@ -1137,7 +1202,7 @@ var I18N = {
         'cta.note': 'Free to use · Optional Pro upgrade · No account required',
         'footer.tagline': 'The Chrome & Edge extension that makes Markdown reading a joy.',
         'footer.p1': 'Product', 'footer.l1': 'Features', 'footer.l2': 'Gallery', 'footer.l3': 'Pro',
-        'footer.p2': 'Resources', 'footer.l4': 'Privacy Policy', 'footer.l5': 'GitHub', 'footer.l6': 'Chrome Web Store', 'footer.l7': 'Edge Add-ons',
+        'footer.p2': 'Resources', 'footer.l4': 'Privacy Policy', 'footer.l5': 'GitHub', 'footer.l6': 'Chrome Web Store', 'footer.l7': 'Edge Add-ons', 'footer.l8': 'Vim / Neovim Plugin',
         'footer.rights': 'All rights reserved.'
     }
 };
